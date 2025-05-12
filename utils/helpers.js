@@ -50,9 +50,9 @@ const slugify = (text) => {
   return text
     .toString()
     .toLowerCase()
-    .replace(/\\s+/g, '-')
-    .replace(/[^\\w\\-]+/g, '')
-    .replace(/\\-\\-+/g, '-')
+    .replace(/\s+/g, '-')
+    .replace(/[^\w\-]+/g, '')
+    .replace(/\-\-+/g, '-')
     .replace(/^-+/, '')
     .replace(/-+$/, '');
 };
@@ -71,7 +71,7 @@ const maskSensitiveData = (data, start = 0, end = 4, maskChar = '*') => {
   }
   
   const maskedPart = maskChar.repeat(maskedLength);
-  return \`\${visibleStart}\${maskedPart}\${visibleEnd}\`;
+  return `${visibleStart}${maskedPart}${visibleEnd}`;
 };
 
 module.exports = {
