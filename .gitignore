@@ -42,3 +42,5 @@ pids
 *.swp
 *.swo
 .DS_Store
+
+config/google-vision-credentials.json

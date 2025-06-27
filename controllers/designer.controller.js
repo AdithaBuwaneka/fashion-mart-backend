@@ -308,17 +308,17 @@ exports.submitDesign = async (req, res) => {
     design.status = 'pending';
     await design.save();
     
-      res.status(200).json({
-        success: true,
-        message: 'Design submitted for approval',
-        data: design
-      });
-    } catch (error) {
-      console.error('Error submitting design:', error);
-      res.status(500).json({
-        success: false,
-        message: 'Failed to submit design',
-        error: error.message
-      });
-    }
-  };
+    res.status(200).json({
+      success: true,
+      message: 'Design submitted for approval',
+      data: design
+    });
+  } catch (error) {
+    console.error('Error submitting design:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to submit design',
+      error: error.message
+    });
+  }
+};

@@ -1,7 +1,21 @@
 // Global error handling middleware
 const errorHandler = (err, req, res, next) => {
-  // Log error
-  console.error('Error:', err);
+  // Log error (but don't log sensitive information)
+  const errorLog = {
+    message: err.message,
+    url: req.url,
+    method: req.method,
+    ip: req.ip,
+    userAgent: req.get('User-Agent'),
+    timestamp: new Date().toISOString()
+  };
+  
+  // Only log stack trace in development
+  if (process.env.NODE_ENV === 'development') {
+    errorLog.stack = err.stack;
+  }
+  
+  console.error('Error:', errorLog);
   
   // Default error status and message
   let statusCode = err.statusCode || 500;
@@ -26,14 +40,26 @@ const errorHandler = (err, req, res, next) => {
   } else if (err.name === 'StripeError') {
     statusCode = 400;
     message = err.message;
+  } else if (statusCode === 500) {
+    // Don't expose internal server errors in production
+    if (process.env.NODE_ENV === 'production') {
+      message = 'Internal Server Error';
+    }
   }
   
   // Send error response
-  res.status(statusCode).json({
+  const errorResponse = {
     success: false,
     message,
-    stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
-  });
+    timestamp: new Date().toISOString()
+  };
+  
+  // Only include stack trace in development
+  if (process.env.NODE_ENV === 'development') {
+    errorResponse.stack = err.stack;
+  }
+  
+  res.status(statusCode).json(errorResponse);
 };
 
 // 404 Not Found middleware
