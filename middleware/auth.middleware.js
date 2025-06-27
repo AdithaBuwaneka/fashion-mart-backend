@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
-const { Webhook } = require('@clerk/clerk-sdk-node');
-const { clerkClient } = require('@clerk/clerk-sdk-node');
+const { Webhook } = require('svix');
+const { clerkClient } = require('@clerk/express');
 const authConfig = require('../config/auth.config');
 const db = require('../models');
 const User = db.user;
@@ -11,9 +11,13 @@ const clerk = clerkClient;
 const verifyClerkWebhook = (req, res, next) => {
   try {
     const webhook = new Webhook(authConfig.clerkWebhookSecret);
-    webhook.verify(req.body, req.headers);
+    const payload = JSON.stringify(req.body);
+    const headers = req.headers;
+    
+    webhook.verify(payload, headers);
     next();
   } catch (error) {
+    console.error('Webhook verification failed:', error);
     return res.status(401).json({ message: 'Invalid webhook signature' });
   }
 };
@@ -44,7 +48,9 @@ const verifySession = async (req, res, next) => {
     }
     
     // Verify the session with Clerk
-    const session = await clerk.sessions.verifySession(sessionToken);
+    const session = await clerk.sessions.verifySession(sessionToken, {
+      secretKey: authConfig.clerkSecretKey
+    });
     
     if (!session) {
       return res.status(401).json({ message: 'Invalid session' });

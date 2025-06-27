@@ -1,4 +1,6 @@
 module.exports = {
+  // Clerk secret key for API authentication
+  clerkSecretKey: process.env.CLERK_SECRET_KEY,
   // Clerk webhook secret for webhook verification
   clerkWebhookSecret: process.env.CLERK_WEBHOOK_SECRET,
   // JWT secret for internal token generation (used as backup or for special cases)
