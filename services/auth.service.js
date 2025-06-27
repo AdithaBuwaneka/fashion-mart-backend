@@ -1,7 +1,7 @@
 // Create the auth.service.js file
 // auth.service.js
 
-const { Webhook } = require('@clerk/clerk-sdk-node');
+const { Webhook } = require('svix');
 const jwt = require('jsonwebtoken');
 const db = require('../models');
 const User = db.user;
