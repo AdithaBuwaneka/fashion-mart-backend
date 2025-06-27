@@ -64,7 +64,7 @@ exports.sendShippingNotification = async (order, customer) => {
         <h2>Order Details</h2>
         <p><strong>Order ID:</strong> ${order.id.substring(0, 8)}</p>
         <p><strong>Date:</strong> ${new Date(order.createdAt).toLocaleDateString()}</p>
-        <p><strong>Total Amount:</strong> ${parseFloat(order.totalAmount).toFixed(2)}</p>
+        <p><strong>Total Amount:</strong> $${parseFloat(order.totalAmount).toFixed(2)}</p>
         <p>Thank you for shopping with FashionMart!</p>
       `
     };
@@ -90,7 +90,7 @@ exports.sendDeliveryNotification = async (order, customer) => {
         <h2>Order Details</h2>
         <p><strong>Order ID:</strong> ${order.id.substring(0, 8)}</p>
         <p><strong>Date:</strong> ${new Date(order.createdAt).toLocaleDateString()}</p>
-        <p><strong>Total Amount:</strong> ${parseFloat(order.totalAmount).toFixed(2)}</p>
+        <p><strong>Total Amount:</strong> $${parseFloat(order.totalAmount).toFixed(2)}</p>
         <h3>Return Policy</h3>
         <p>If you're not completely satisfied with your purchase, you can return it within 7 days. Please visit our website for return instructions.</p>
         <p>Thank you for shopping with FashionMart!</p>
@@ -145,7 +145,7 @@ exports.sendRefundConfirmation = async (payment, refundAmount, customer) => {
         <p>We've processed a refund for your order.</p>
         <h2>Refund Details</h2>
         <p><strong>Order ID:</strong> ${payment.orderId.substring(0, 8)}</p>
-        <p><strong>Refund Amount:</strong> ${refundAmount.toFixed(2)}</p>
+        <p><strong>Refund Amount:</strong> $${refundAmount.toFixed(2)}</p>
         <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
         <p>The refund should appear in your account within 5-7 business days, depending on your payment method and financial institution.</p>
         <p>Thank you for shopping with FashionMart!</p>
