@@ -1,18 +1,18 @@
 // Email validation
 const isValidEmail = (email) => {
-  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$/;
+  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
   return emailRegex.test(email);
 };
 
 // Password validation (minimum 8 characters, at least one letter and one number)
 const isValidPassword = (password) => {
-  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d@$!%*#?&]{8,}$/;
+  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,}$/;
   return passwordRegex.test(password);
 };
 
 // Phone number validation (simple format - can be expanded as needed)
 const isValidPhone = (phone) => {
-  const phoneRegex = /^\\+?[0-9]{10,15}$/;
+  const phoneRegex = /^\+?[0-9]{10,15}$/;
   return phoneRegex.test(phone);
 };
 

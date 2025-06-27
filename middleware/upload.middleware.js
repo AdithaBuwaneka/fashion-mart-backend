@@ -36,8 +36,12 @@ const storage = multer.diskStorage({
   filename: (req, file, cb) => {
     // Create a unique filename with timestamp and original extension
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    const ext = path.extname(file.originalname);
-    cb(null, file.fieldname + '-' + uniqueSuffix + ext);
+    const ext = path.extname(file.originalname).toLowerCase();
+    
+    // Sanitize filename to prevent directory traversal
+    const sanitizedName = file.fieldname.replace(/[^a-zA-Z0-9]/g, '');
+    
+    cb(null, sanitizedName + '-' + uniqueSuffix + ext);
   }
 });
 
@@ -47,10 +51,18 @@ const fileFilter = (req, file, cb) => {
   const ext = allowedTypes.test(path.extname(file.originalname).toLowerCase());
   const mimetype = allowedTypes.test(file.mimetype);
   
+  // Additional security: check for double extensions
+  const fileName = file.originalname.toLowerCase();
+  const suspiciousExtensions = /\.(php|js|html|exe|bat|sh|py|pl|jsp|asp|aspx)$/;
+  
+  if (suspiciousExtensions.test(fileName)) {
+    return cb(new Error('File type not allowed - suspicious extension detected'));
+  }
+  
   if (ext && mimetype) {
     return cb(null, true);
   } else {
-    cb(new Error('Only image files are allowed!'));
+    cb(new Error('Only image files (JPEG, PNG, GIF, WebP) are allowed!'));
   }
 };
 

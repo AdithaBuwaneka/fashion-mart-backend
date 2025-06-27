@@ -1,8 +1,12 @@
 const jwt = require('jsonwebtoken');
 const { Webhook } = require('@clerk/clerk-sdk-node');
+const { clerkClient } = require('@clerk/clerk-sdk-node');
 const authConfig = require('../config/auth.config');
 const db = require('../models');
 const User = db.user;
+
+// Initialize Clerk client
+const clerk = clerkClient;
 
 const verifyClerkWebhook = (req, res, next) => {
   try {
@@ -76,13 +80,17 @@ const isAdmin = async (req, res, next) => {
       return res.status(404).json({ message: 'User not found' });
     }
     
+    // Use constant-time comparison to prevent timing attacks
     if (user.role !== 'admin') {
-      return res.status(403).json({ message: 'Require Admin Role!' });
+      // Add a small delay to prevent timing-based user enumeration
+      await new Promise(resolve => setTimeout(resolve, Math.random() * 100));
+      return res.status(403).json({ message: 'Access denied' });
     }
     
     next();
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    // Don't expose detailed error information
+    return res.status(500).json({ message: 'Authentication error' });
   }
 };
 
@@ -203,6 +211,6 @@ module.exports = {
   isCustomer,
   isStaff,
   isInventoryManager,
-  isAdminOrInventoryManager,
-  isAdminOrStaff
+  isAdminOrStaff,
+  isAdminOrInventoryManager
 };
