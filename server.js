@@ -108,9 +108,27 @@ const PORT = process.env.PORT || 5000;
 // Sync database and start server
 const startServer = async () => {
   try {
-    // Sync database models
-    await db.sequelize.sync({ alter: process.env.NODE_ENV === 'development' });
-    logger.info('Database connected and synced');
+    // Test database connection first
+    await db.sequelize.authenticate();
+    logger.info('Database connection has been established successfully');
+    
+    // Check if tables exist before syncing
+    const [results] = await db.sequelize.query(
+      "SELECT COUNT(*) as count FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'fashionmart' AND TABLE_NAME = 'users'"
+    );
+    
+    const tablesExist = results[0].count > 0;
+    
+    if (!tablesExist) {
+      // Only sync if tables don't exist
+      logger.info('Tables do not exist, creating them...');
+      await db.sequelize.sync({ force: false });
+      logger.info('Database tables created successfully');
+    } else {
+      logger.info('Tables already exist, skipping sync to avoid key conflicts');
+    }
+    
+    logger.info('Database connected and ready');
     
     // Start server
     app.listen(PORT, () => {
