@@ -303,3 +303,87 @@ exports.deleteReport = async (req, res) => {
     });
   }
 };
+
+// Create custom report
+exports.createCustomReport = async (req, res) => {
+  try {
+    const { title, description, type, dateRange, filters } = req.body;
+    
+    // Validate required fields
+    if (!title || !type) {
+      return res.status(400).json({
+        success: false,
+        message: 'Title and type are required'
+      });
+    }
+    
+    // Generate report data based on type
+    let reportData = {};
+    const { startDate, endDate } = dateRange || {};
+    
+    switch (type) {
+      case 'sales':
+        // Generate sales report
+        const orders = await db.order.findAll({
+          where: startDate && endDate ? {
+            createdAt: {
+              [db.Sequelize.Op.between]: [new Date(startDate), new Date(endDate)]
+            }
+          } : {},
+          include: ['items', 'customer']
+        });
+        
+        reportData = {
+          totalOrders: orders.length,
+          totalRevenue: orders.reduce((sum, order) => sum + parseFloat(order.totalAmount), 0),
+          orders: orders
+        };
+        break;
+        
+      case 'inventory':
+        // Generate inventory report
+        const products = await db.product.findAll({
+          include: ['category']
+        });
+        
+        reportData = {
+          totalProducts: products.length,
+          lowStockProducts: products.filter(p => p.stock < 10).length,
+          products: products
+        };
+        break;
+        
+      default:
+        reportData = {
+          message: 'Custom report generated',
+          filters: filters || {}
+        };
+    }
+    
+    // Create report record
+    const report = await db.report.create({
+      title,
+      description: description || '',
+      type,
+      data: JSON.stringify(reportData),
+      createdBy: req.userId,
+      createdAt: new Date()
+    });
+    
+    res.status(201).json({
+      success: true,
+      data: {
+        report,
+        reportData
+      },
+      message: 'Custom report created successfully'
+    });
+  } catch (error) {
+    logger.error('Error creating custom report:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to create custom report',
+      error: error.message
+    });
+  }
+};

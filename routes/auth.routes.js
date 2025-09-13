@@ -31,6 +31,39 @@ router.post('/webhook', verifyClerkWebhook, async (req, res) => {
   }
 });
 
+// Get session information
+router.get('/session', verifySession, async (req, res) => {
+  try {
+    const user = await User.findByPk(req.userId, {
+      attributes: ['id', 'email', 'firstName', 'lastName', 'role', 'active']
+    });
+    
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found'
+      });
+    }
+    
+    res.status(200).json({
+      success: true,
+      data: {
+        user,
+        authenticated: true,
+        sessionValid: true
+      },
+      message: 'Session is valid'
+    });
+  } catch (error) {
+    console.error('Error checking session:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to check session',
+      error: error.message
+    });
+  }
+});
+
 // Get user profile
 router.get('/profile', verifySession, async (req, res) => {
   try {

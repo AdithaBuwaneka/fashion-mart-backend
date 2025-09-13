@@ -62,21 +62,21 @@ app.use(cors({
 app.use(express.json({ limit: '10mb' })); // Parse JSON request body with size limit
 app.use(express.urlencoded({ extended: true, limit: '10mb' })); // Parse URL-encoded request body with size limit
 
-// Rate limiting
+// Rate limiting (Generous for testing)
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
+  max: 1000, // Allow 1000 requests per windowMs for testing
   message: 'Too many requests from this IP, please try again later',
   standardHeaders: true,
   legacyHeaders: false,
 });
 
-// Speed limiter
+// Speed limiter (Generous for testing)
 const speedLimiter = slowDown({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  delayAfter: 50, // allow 50 requests per 15 minutes, then...
-  delayMs: () => 500, // begin adding 500ms of delay per request above 50
-  maxDelayMs: 20000, // maximum delay of 20 seconds
+  delayAfter: 500, // Allow 500 requests per 15 minutes before delays
+  delayMs: () => 100, // Reduced delay for testing
+  maxDelayMs: 2000, // Maximum delay of 2 seconds
   validate: { delayMs: false } // disable the warning message
 });
 

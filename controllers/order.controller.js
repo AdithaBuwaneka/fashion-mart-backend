@@ -329,3 +329,73 @@ exports.exportOrdersReport = async (req, res) => {
     });
   }
 };
+
+// Create order (general endpoint)
+exports.createOrder = async (req, res) => {
+  try {
+    const { customerId, items, shippingAddress, paymentMethod } = req.body;
+    
+    // Validate required fields
+    if (!customerId || !items || !Array.isArray(items) || items.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: 'Customer ID and items are required'
+      });
+    }
+    
+    // Calculate total amount
+    let totalAmount = 0;
+    const orderItems = [];
+    
+    for (const item of items) {
+      const product = await Product.findByPk(item.productId);
+      if (!product) {
+        return res.status(404).json({
+          success: false,
+          message: `Product with ID ${item.productId} not found`
+        });
+      }
+      
+      const itemTotal = parseFloat(product.price) * parseInt(item.quantity);
+      totalAmount += itemTotal;
+      
+      orderItems.push({
+        productId: item.productId,
+        quantity: item.quantity,
+        price: product.price,
+        total: itemTotal
+      });
+    }
+    
+    // Create order
+    const order = await Order.create({
+      customerId,
+      totalAmount,
+      status: 'pending',
+      shippingAddress: shippingAddress || '',
+      paymentMethod: paymentMethod || 'pending',
+      orderDate: new Date()
+    });
+    
+    // Create order items
+    const orderItemsWithOrderId = orderItems.map(item => ({
+      ...item,
+      orderId: order.id
+    }));
+    
+    await OrderItem.bulkCreate(orderItemsWithOrderId);
+    
+    res.status(201).json({
+      success: true,
+      data: order,
+      message: 'Order created successfully'
+    });
+  } catch (error) {
+    logger.error('Error creating order:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to create order',
+      error: error.message
+    });
+  }
+};

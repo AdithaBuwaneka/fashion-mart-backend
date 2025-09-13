@@ -11,6 +11,7 @@ router.use(verifySession);
 
 // Routes for admin and staff
 router.get('/', isAdminOrStaff, orderController.getAllOrders);
+router.post('/', orderController.createOrder);  // Allow any authenticated user to create orders
 router.get('/analytics', isAdminOrStaff, orderController.getOrderAnalytics);
 router.get('/export', isAdminOrStaff, orderController.exportOrdersReport);
 router.get('/:orderId', isAdminOrStaff, orderController.getOrderById);

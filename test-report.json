@@ -1,0 +1,132 @@
+{
+  "summary": {
+    "total": 20,
+    "passed": 0,
+    "failed": 18,
+    "skipped": 2,
+    "successRate": 0
+  },
+  "results": [
+    {
+      "testName": "Health Check",
+      "status": "FAIL",
+      "details": "Error",
+      "timestamp": "2025-09-13T06:33:31.393Z"
+    },
+    {
+      "testName": "Get Products (Public)",
+      "status": "FAIL",
+      "details": "Error",
+      "timestamp": "2025-09-13T06:33:31.398Z"
+    },
+    {
+      "testName": "Get Categories (Public)",
+      "status": "FAIL",
+      "details": "Error",
+      "timestamp": "2025-09-13T06:33:31.400Z"
+    },
+    {
+      "testName": "Admin Dashboard Stats",
+      "status": "FAIL",
+      "details": "Error",
+      "timestamp": "2025-09-13T06:33:31.403Z"
+    },
+    {
+      "testName": "Admin Get Users",
+      "status": "FAIL",
+      "details": "Error",
+      "timestamp": "2025-09-13T06:33:31.405Z"
+    },
+    {
+      "testName": "Admin Get Reports",
+      "status": "FAIL",
+      "details": "Error",
+      "timestamp": "2025-09-13T06:33:31.407Z"
+    },
+    {
+      "testName": "Customer Get Orders",
+      "status": "FAIL",
+      "details": "Error",
+      "timestamp": "2025-09-13T06:33:31.410Z"
+    },
+    {
+      "testName": "Customer Get Profile",
+      "status": "FAIL",
+      "details": "Error",
+      "timestamp": "2025-09-13T06:33:31.415Z"
+    },
+    {
+      "testName": "Customer Get Returns",
+      "status": "FAIL",
+      "details": "Error",
+      "timestamp": "2025-09-13T06:33:31.418Z"
+    },
+    {
+      "testName": "Designer Get Designs",
+      "status": "FAIL",
+      "details": "Error",
+      "timestamp": "2025-09-13T06:33:31.420Z"
+    },
+    {
+      "testName": "Staff Get Orders",
+      "status": "FAIL",
+      "details": "Error",
+      "timestamp": "2025-09-13T06:33:31.422Z"
+    },
+    {
+      "testName": "Staff Get Returns",
+      "status": "FAIL",
+      "details": "Error",
+      "timestamp": "2025-09-13T06:33:31.423Z"
+    },
+    {
+      "testName": "Inventory Get Products",
+      "status": "FAIL",
+      "details": "Error",
+      "timestamp": "2025-09-13T06:33:31.426Z"
+    },
+    {
+      "testName": "Inventory Get Pending Designs",
+      "status": "FAIL",
+      "details": "Error",
+      "timestamp": "2025-09-13T06:33:31.428Z"
+    },
+    {
+      "testName": "Inventory Get Low Stock",
+      "status": "FAIL",
+      "details": "Error",
+      "timestamp": "2025-09-13T06:33:31.431Z"
+    },
+    {
+      "testName": "Inventory Get Categories",
+      "status": "FAIL",
+      "details": "Error",
+      "timestamp": "2025-09-13T06:33:31.433Z"
+    },
+    {
+      "testName": "Auth Protection",
+      "status": "FAIL",
+      "details": "Protected endpoints accessible without authentication",
+      "timestamp": "2025-09-13T06:33:31.435Z"
+    },
+    {
+      "testName": "Invalid Token Protection",
+      "status": "FAIL",
+      "details": "Invalid tokens not properly handled",
+      "timestamp": "2025-09-13T06:33:31.438Z"
+    },
+    {
+      "testName": "Customer->Admin Access Denied",
+      "status": "SKIP",
+      "details": "Role verification not implemented yet",
+      "timestamp": "2025-09-13T06:33:31.440Z"
+    },
+    {
+      "testName": "Designer->Staff Access Denied",
+      "status": "SKIP",
+      "details": "Role verification not implemented yet",
+      "timestamp": "2025-09-13T06:33:31.442Z"
+    }
+  ],
+  "timestamp": "2025-09-13T06:33:31.443Z"
+}

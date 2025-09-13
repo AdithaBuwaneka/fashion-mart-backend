@@ -11,6 +11,7 @@ router.use(verifySession, isAdmin);
 
 // Report routes
 router.get('/', reportController.getAllReports);
+router.post('/', reportController.createCustomReport);  // Create custom reports
 router.get('/:reportId', reportController.getReportById);
 router.post('/monthly', reportController.generateMonthlyReport);
 router.post('/quarterly', reportController.generateQuarterlyReport);
