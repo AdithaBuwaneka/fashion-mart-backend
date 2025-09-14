@@ -16,25 +16,28 @@ A comprehensive Node.js REST API backend for a fashion e-commerce platform with 
 
 ### Database Schema
 
-#### Users System
-- **Users** (`users`): Multi-role user management (admin, designer, customer, staff, inventory_manager)
-- **Authentication**: Clerk-based auth with session management
+#### Core Entity Models (UUID-based)
+- **Products** (`products`): UUID primary key, designer attribution, price, category linking, image JSON arrays
+- **Stock** (`stocks`): UUID primary key, size/color variants, quantity tracking, low-stock thresholds, virtual fields
+- **Orders** (`orders`): UUID primary key, comprehensive status tracking (6 states), JSON shipping addresses, payment integration
+- **Payments** (`payments`): UUID primary key, Stripe integration, multiple payment methods, receipt management
+- **Designs** (`designs`): UUID primary key, approval workflow (draft→pending→approved/rejected), image galleries
 
-#### Product Catalog
-- **Products** (`products`): Core product information with designer attribution
-- **Categories** (`categories`): Hierarchical category system with parent-child relationships
-- **Stock** (`stocks`): Size/color variant inventory tracking
-- **Designs** (`designs`): Designer-specific product designs
+#### User Management (String-based Clerk IDs)
+- **Users** (`users`): Clerk string IDs, role-based access (5 roles), email validation, profile management
+- **Authentication**: Clerk webhook integration, JWT session management, multi-role authorization middleware
 
-#### Order Management
-- **Orders** (`orders`): Order lifecycle management
-- **Order Items** (`order_items`): Individual product items within orders
-- **Payments** (`payments`): Payment transaction records
-- **Returns** (`returns`): Return and refund processing
+#### Relational Structure
+- **Categories** (`categories`): Integer IDs, hierarchical parent-child relationships, unlimited nesting
+- **Order Items** (`order_items`): Junction table for orders-products, individual item tracking
+- **Returns** (`returns`): Full return lifecycle, staff assignment, reason tracking
+- **Notifications** (`notifications`): User-specific messaging system
+- **Reports** (`reports`): Business analytics with creator attribution
 
-#### System Features
-- **Notifications** (`notifications`): User notification system
-- **Reports** (`reports`): Business analytics and reporting
+#### Relationship Mapping
+- Optimized foreign key constraints to reduce database overhead
+- Bidirectional associations with selective constraints
+- JSON field usage for flexible data structures (addresses, images, metadata)
 
 ## 🚀 Quick Start
 
@@ -193,6 +196,12 @@ app.use('/api/inventory/*', verifySession, isAdminOrInventoryManager);
 - `PUT /api/inventory/stock/:id` - Update stock
 - `POST /api/inventory/restock` - Restock items
 - `GET /api/inventory/alerts` - Low stock alerts
+
+### API Documentation
+- **Swagger UI**: `http://localhost:5000/api-docs/` - Interactive API documentation
+- **ReDoc**: `http://localhost:5000/redoc` - Alternative documentation viewer
+- **JSON Spec**: `http://localhost:5000/api-docs-json` - OpenAPI JSON specification
+- **Health Check**: `http://localhost:5000/api/health` - System status endpoint
 
 ## 🛡️ Security Features
 
@@ -369,23 +378,38 @@ NODE_ENV=production
 - Document API changes
 - Update README for new features
 
-## 📞 Support
+## 📞 Support & Documentation
 
 ### Technical Support
-- **Documentation**: `http://localhost:5000/api-docs` for complete API reference
-- **Health Check**: `/api/health` for system status
-- **Logs**: Check `logs/` directory for detailed error information
+- **Interactive API Docs**: `http://localhost:5000/api-docs/` - Complete Swagger documentation
+- **Alternative Docs**: `http://localhost:5000/redoc` - ReDoc interface
+- **Health Check**: `http://localhost:5000/api/health` - System status monitoring
+- **Logs**: Check `logs/` directory for detailed error information and request tracking
 
-### Business Logic
-- Multi-tenant fashion marketplace
-- Role-based inventory management
-- Integrated payment processing
-- AI-powered product analysis
+### System Status & Monitoring
+- **Real-time Health**: Server automatically monitors database connectivity
+- **Winston Logging**: Comprehensive logging with daily rotation (14-day retention)
+- **Error Tracking**: Structured error logging with stack traces
+- **Request Monitoring**: Morgan HTTP request logging integrated with Winston
+
+### Business Capabilities
+- **Multi-Role E-commerce**: Complete fashion marketplace with 5 user roles
+- **Advanced Inventory**: Real-time stock tracking with size/color variants
+- **Payment Integration**: Full Stripe payment processing with receipt management
+- **Design Workflow**: 4-stage design approval process for designers
+- **AI Integration**: Google Cloud Vision API for image analysis and categorization
+- **Analytics & Reporting**: Comprehensive business intelligence and export capabilities
 
 ---
 
+**Architecture**: Node.js + Express + MySQL + Sequelize ORM
+**Authentication**: Clerk.dev with JWT tokens
+**Payments**: Stripe integration
+**Documentation**: OpenAPI 3.0 (Swagger)
 **Version**: 1.0.0
 **License**: MIT
 **Author**: Fashion Mart Team
 
-For additional support or questions, please refer to the API documentation at `http://localhost:5000/api-docs` when the server is running.
+🚀 **Ready for Production**: Fully configured with security middleware, rate limiting, input sanitization, and comprehensive error handling.
+
+For technical questions, refer to the interactive API documentation at `http://localhost:5000/api-docs/` when the server is running.

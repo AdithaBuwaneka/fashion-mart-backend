@@ -5,6 +5,34 @@ const authService = require('../services/auth.service');
 const db = require('../models');
 const User = db.user;
 
+/**
+ * @swagger
+ * /api/auth/webhook:
+ *   post:
+ *     summary: Clerk webhook endpoint for user events
+ *     tags: [Authentication]
+ *     security: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               type:
+ *                 type: string
+ *                 description: Webhook event type
+ *               data:
+ *                 type: object
+ *                 description: Event data from Clerk
+ *     responses:
+ *       200:
+ *         description: Webhook processed successfully
+ *       400:
+ *         description: Webhook processing failed
+ *       500:
+ *         description: Server error
+ */
 // Webhook endpoint for Clerk events
 router.post('/webhook', verifyClerkWebhook, async (req, res) => {
   try {
