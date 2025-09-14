@@ -72,6 +72,7 @@ A comprehensive Node.js REST API backend for a fashion e-commerce platform with 
    ```bash
    npm run dev
    # Server runs on http://localhost:5000
+   # API Documentation: http://localhost:5000/api-docs
    ```
 
 ## ⚙️ Configuration
@@ -267,6 +268,10 @@ npm start          # Production server
 npm run dev        # Development with nodemon
 npm run build      # No build required for Node.js
 npm test           # Run Jest tests
+
+# API Documentation available at:
+# Development: http://localhost:5000/api-docs
+# Production: http://your-domain:5000/api-docs
 ```
 
 ### Code Structure
@@ -367,7 +372,7 @@ NODE_ENV=production
 ## 📞 Support
 
 ### Technical Support
-- **Documentation**: `/api-docs` for complete API reference
+- **Documentation**: `http://localhost:5000/api-docs` for complete API reference
 - **Health Check**: `/api/health` for system status
 - **Logs**: Check `logs/` directory for detailed error information
 
@@ -383,4 +388,4 @@ NODE_ENV=production
 **License**: MIT
 **Author**: Fashion Mart Team
 
-For additional support or questions, please refer to the API documentation at `/api-docs` when the server is running.
+For additional support or questions, please refer to the API documentation at `http://localhost:5000/api-docs` when the server is running.
