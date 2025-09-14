@@ -322,3 +322,25 @@ exports.submitDesign = async (req, res) => {
     });
   }
 };
+
+// Get all categories (for design creation)
+exports.getCategories = async (req, res) => {
+  try {
+    const categories = await Category.findAll({
+      where: { active: true },
+      order: [['name', 'ASC']]
+    });
+
+    res.status(200).json({
+      success: true,
+      data: categories
+    });
+  } catch (error) {
+    console.error('Error getting categories:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to get categories',
+      error: error.message
+    });
+  }
+};

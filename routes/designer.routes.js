@@ -25,4 +25,7 @@ router.delete('/designs/:designId', designerController.deleteDesign);
 // Submit design for approval
 router.post('/designs/:designId/submit', designerController.submitDesign);
 
+// Get categories (needed for design creation)
+router.get('/categories', designerController.getCategories);
+
 module.exports = router;
