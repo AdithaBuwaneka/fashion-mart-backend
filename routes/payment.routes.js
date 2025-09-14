@@ -12,8 +12,8 @@ router.use(verifySession);
 // Routes for admin and staff
 router.get('/', isAdmin, paymentController.getAllPayments);
 router.get('/date-range', isAdminOrStaff, paymentController.getPaymentsByDateRange);
-router.get('/:paymentId', isAdminOrStaff, paymentController.getPaymentById);
-router.post('/:orderId/intent', isAdminOrStaff, paymentController.createPaymentIntent);
+router.get('/:paymentId', paymentController.getPaymentById);  // Allow payment owner to view their payments
+router.post('/:orderId/intent', paymentController.createPaymentIntent);  // Allow customers to create payment intents
 router.post('/:paymentId/refund', isAdminOrStaff, paymentController.processRefund);
 
 module.exports = router;

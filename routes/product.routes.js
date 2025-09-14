@@ -111,52 +111,6 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Get product by ID (public endpoint)
-router.get('/:productId', async (req, res) => {
-  try {
-    const { productId } = req.params;
-
-    const product = await Product.findByPk(productId, {
-      where: { active: true },
-      include: [
-        {
-          model: Category,
-          as: 'category',
-          attributes: ['id', 'name', 'description']
-        },
-        {
-          model: User,
-          as: 'designer',
-          attributes: ['id', 'firstName', 'lastName']
-        },
-        {
-          model: Stock,
-          as: 'stocks'
-        }
-      ]
-    });
-
-    if (!product) {
-      return res.status(404).json({
-        success: false,
-        message: 'Product not found'
-      });
-    }
-
-    res.status(200).json({
-      success: true,
-      data: product
-    });
-  } catch (error) {
-    console.error('Error getting product:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Failed to get product',
-      error: error.message
-    });
-  }
-});
-
 // Get featured products (public endpoint) - MUST be before /:productId
 router.get('/featured', async (req, res) => {
   try {
@@ -200,7 +154,54 @@ router.get('/featured', async (req, res) => {
   }
 });
 
-// Get related products (public endpoint)
+// Get product availability (public endpoint) - MUST be before /:productId
+router.get('/:productId/availability', async (req, res) => {
+  try {
+    const { productId } = req.params;
+
+    const stocks = await Stock.findAll({
+      where: { productId }
+    });
+
+    if (stocks.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: 'Product not found'
+      });
+    }
+
+    // Group stock by size and color
+    const stockMap = {};
+    let hasAvailableStock = false;
+
+    stocks.forEach(stock => {
+      if (!stockMap[stock.size]) {
+        stockMap[stock.size] = {};
+      }
+      stockMap[stock.size][stock.color] = stock.quantity;
+      if (stock.quantity > 0) {
+        hasAvailableStock = true;
+      }
+    });
+
+    res.status(200).json({
+      success: true,
+      data: {
+        available: hasAvailableStock,
+        stock: stockMap
+      }
+    });
+  } catch (error) {
+    console.error('Error getting product availability:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to get product availability',
+      error: error.message
+    });
+  }
+});
+
+// Get related products (public endpoint) - MUST be before /:productId
 router.get('/:productId/related', async (req, res) => {
   try {
     const { productId } = req.params;
@@ -257,48 +258,47 @@ router.get('/:productId/related', async (req, res) => {
   }
 });
 
-// Get product availability (public endpoint)
-router.get('/:productId/availability', async (req, res) => {
+// Get product by ID (public endpoint) - MUST be after all specific routes
+router.get('/:productId', async (req, res) => {
   try {
     const { productId } = req.params;
 
-    const stocks = await Stock.findAll({
-      where: { productId }
+    const product = await Product.findByPk(productId, {
+      where: { active: true },
+      include: [
+        {
+          model: Category,
+          as: 'category',
+          attributes: ['id', 'name', 'description']
+        },
+        {
+          model: User,
+          as: 'designer',
+          attributes: ['id', 'firstName', 'lastName']
+        },
+        {
+          model: Stock,
+          as: 'stocks'
+        }
+      ]
     });
 
-    if (stocks.length === 0) {
+    if (!product) {
       return res.status(404).json({
         success: false,
         message: 'Product not found'
       });
     }
 
-    // Group stock by size and color
-    const stockMap = {};
-    let hasAvailableStock = false;
-
-    stocks.forEach(stock => {
-      if (!stockMap[stock.size]) {
-        stockMap[stock.size] = {};
-      }
-      stockMap[stock.size][stock.color] = stock.quantity;
-      if (stock.quantity > 0) {
-        hasAvailableStock = true;
-      }
-    });
-
     res.status(200).json({
       success: true,
-      data: {
-        available: hasAvailableStock,
-        stock: stockMap
-      }
+      data: product
     });
   } catch (error) {
-    console.error('Error getting product availability:', error);
+    console.error('Error getting product:', error);
     res.status(500).json({
       success: false,
-      message: 'Failed to get product availability',
+      message: 'Failed to get product',
       error: error.message
     });
   }
