@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fashion Mart - Simple User Flow</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+        .mermaid {
+            text-align: center;
+            margin: 30px 0;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .flow-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+        }
+        .step {
+            background: #3498db;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .step h4 { margin: 0 0 5px 0; }
+        .step p { margin: 0; font-size: 0.9em; }
+        .designer { background: #e74c3c; }
+        .admin { background: #f39c12; }
+        .staff { background: #27ae60; }
+        .inventory { background: #9b59b6; }
+        .approvals {
+            background: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌟 Fashion Mart - Simple User Flow</h1>
+            <p>High-level overview of how all users connect</p>
+        </div>
+
+        <div class="mermaid">
+            flowchart TD
+                A[👤 Customer<br/>Buys Products] --> B[👥 Staff<br/>Processes Orders]
+                C[🎨 Designer<br/>Creates Designs] --> D[📦 Inventory<br/>Approves Designs]
+                D --> A
+                E[👑 Admin<br/>Manages Everyone] --> A
+                E --> B
+                E --> C
+                E --> D
+                B --> A
+        </div>
+
+        <div class="flow-steps">
+            <div class="step">
+                <h4>👤 Customer</h4>
+                <p>• Login<br/>• Browse Products<br/>• Place Order<br/>• Track & Return</p>
+            </div>
+            <div class="step designer">
+                <h4>🎨 Designer</h4>
+                <p>• Create Design<br/>• Submit for Review<br/>• Get Approval<br/>• Track Sales</p>
+            </div>
+            <div class="step inventory">
+                <h4>📦 Inventory</h4>
+                <p>• Review Designs<br/>• Approve/Reject<br/>• Manage Stock<br/>• Handle Alerts</p>
+            </div>
+            <div class="step staff">
+                <h4>👥 Staff</h4>
+                <p>• Process Orders<br/>• Update Status<br/>• Customer Support<br/>• Handle Returns</p>
+            </div>
+            <div class="step admin">
+                <h4>👑 Admin</h4>
+                <p>• Manage Users<br/>• Assign Roles<br/>• View Reports<br/>• System Control</p>
+            </div>
+        </div>
+
+        <div class="approvals">
+            <h3>🔐 Key Approvals</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+                <div>
+                    <strong>Designer Role:</strong><br/>
+                    Customer → Request → Admin Approval
+                </div>
+                <div>
+                    <strong>Design Approval:</strong><br/>
+                    Designer → Submit → Inventory Approval
+                </div>
+                <div>
+                    <strong>Order Processing:</strong><br/>
+                    Customer → Order → Staff Processing
+                </div>
+                <div>
+                    <strong>Returns:</strong><br/>
+                    Customer → Request → Staff Approval
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px; padding: 20px; background: #2c3e50; color: white; border-radius: 8px;">
+            <h3>Simple Flow: Designer Creates → Inventory Approves → Customer Buys → Staff Processes → Admin Manages</h3>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+    </script>
+</body>
+</html>
