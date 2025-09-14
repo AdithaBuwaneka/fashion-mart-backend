@@ -1,0 +1,1716 @@
+{
+	"info": {
+		"_postman_id": "fashion-mart-api-complete-v2",
+		"name": "Fashion Mart Backend - Complete API Collection v2.0",
+		"description": "**Comprehensive Postman collection for Fashion Mart Backend API**\n\nThis collection covers all 50+ tested endpoints including:\n- ✅ Authentication & User Management\n- ✅ Product Catalog & Management\n- ✅ Order Processing & Tracking\n- ✅ Payment Processing (Stripe)\n- ✅ Designer Workflows\n- ✅ Inventory Management\n- ✅ Admin Dashboard & Reports\n- ✅ File Upload Endpoints\n- ✅ Role-Based Security\n\n**Features:**\n- Complete role-based testing scenarios\n- Auto-token management\n- Environment variables for easy configuration\n- Real-world test data examples\n- Comprehensive error testing\n- Production-ready test cases\n\n**Quick Start:**\n1. Import this collection\n2. Set up environment variables\n3. Run authentication endpoints first\n4. Use role-specific folders for testing\n\n**Environment Variables Required:**\n- `base_url`: http://localhost:5000/api\n- `admin_token`: JWT token for admin user\n- `designer_token`: JWT token for designer user\n- `customer_token`: JWT token for customer user\n- `inventory_token`: JWT token for inventory manager\n\n**Tested & Verified**: All endpoints tested with comprehensive security and functionality verification.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{auth_token}}",
+				"type": "string"
+			}
+		]
+	},
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:5000/api",
+			"type": "string",
+			"description": "Base API URL"
+		},
+		{
+			"key": "auth_token",
+			"value": "",
+			"type": "string",
+			"description": "Current authentication token"
+		},
+		{
+			"key": "admin_token",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyX3Rlc3RfYWRtaW5fMTIzIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzU3ODQ4MzQ3LCJleHAiOjE3NTc5MzQ3NDd9.UYbHabCDgHG621b7Opge5wW7n4VoeUDauElPROX1emE",
+			"type": "string",
+			"description": "Admin JWT token"
+		},
+		{
+			"key": "designer_token",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyX3Rlc3RfZGVzaWduZXJfNDU2Iiwicm9sZSI6ImRlc2lnbmVyIiwiaWF0IjoxNzU3ODQ4MzQ3LCJleHAiOjE3NTc5MzQ3NDc9.7jhlhkJONGQedjRco27Iu7wev55CJWpzXiYi8SmuHzA",
+			"type": "string",
+			"description": "Designer JWT token"
+		},
+		{
+			"key": "customer_token",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyX3Rlc3RfY3VzdG9tZXJfNzg5Iiwicm9sZSI6ImN1c3RvbWVyIiwiaWF0IjoxNzU3ODQ4MzQ3LCJleHAiOjE3NTc5MzQ3NDc9.bDBZJah1msmdLoJatlNKoBg1W2aBewcMO5wCYDKYfX8",
+			"type": "string",
+			"description": "Customer JWT token"
+		},
+		{
+			"key": "inventory_token",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyX3Rlc3RfaW52ZW50b3J5Xzk5OSIsInJvbGUiOiJpbnZlbnRvcnlfbWFuYWdlciIsImlhdCI6MTc1Nzg0ODM0NywiZXhwIjoxNzU3OTM0NzQ3fQ.NCV9rmRMTP9jJxp9ePbVRa3hDCBTjjmM2DV49B7EmPA",
+			"type": "string",
+			"description": "Inventory Manager JWT token"
+		},
+		{
+			"key": "product_id",
+			"value": "6302dde2-15be-4f63-acc0-db432714733a",
+			"type": "string",
+			"description": "Sample product ID for testing"
+		},
+		{
+			"key": "order_id",
+			"value": "",
+			"type": "string",
+			"description": "Order ID for testing"
+		},
+		{
+			"key": "design_id",
+			"value": "1d969615-5aa9-4c5f-9a75-cd8563b3e008",
+			"type": "string",
+			"description": "Design ID for testing"
+		},
+		{
+			"key": "stock_id",
+			"value": "f18800c7-e361-46a7-8e3b-4806a7653635",
+			"type": "string",
+			"description": "Stock ID for testing"
+		}
+	],
+	"item": [
+		{
+			"name": "🔐 Authentication & Session Management",
+			"item": [
+				{
+					"name": "Health Check",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Health check returns 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response contains status OK', function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.status).to.eql('OK');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/health",
+							"host": ["{{base_url}}"],
+							"path": ["health"]
+						},
+						"description": "System health check endpoint - no authentication required"
+					},
+					"response": []
+				},
+				{
+					"name": "Sync User (Admin)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('User sync successful', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('User data returned', function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.be.true;",
+									"    pm.expect(jsonData.data.role).to.eql('admin');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"clerkId\": \"user_test_admin_123\",\n    \"email\": \"admin@fashionmart.test\",\n    \"firstName\": \"Test\",\n    \"lastName\": \"Admin\",\n    \"role\": \"admin\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/sync",
+							"host": ["{{base_url}}"],
+							"path": ["auth", "sync"]
+						},
+						"description": "Sync user from Clerk to local database"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Session (Admin)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Session validation successful', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Session is valid', function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.data.sessionValid).to.be.true;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/auth/session",
+							"host": ["{{base_url}}"],
+							"path": ["auth", "session"]
+						},
+						"description": "Validate current session token"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/auth/profile",
+							"host": ["{{base_url}}"],
+							"path": ["auth", "profile"]
+						},
+						"description": "Get current user profile information"
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Role",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"role\": \"designer\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/user/user_test_designer_456/role",
+							"host": ["{{base_url}}"],
+							"path": ["auth", "user", "user_test_designer_456", "role"]
+						},
+						"description": "Update user role (Admin only)"
+					},
+					"response": []
+				}
+			],
+			"description": "Authentication endpoints including session management, user sync, and profile operations"
+		},
+		{
+			"name": "🛍️ Public Product Catalog",
+			"item": [
+				{
+					"name": "Get All Products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Products retrieved successfully', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Products data structure is correct', function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.data.products).to.be.an('array');",
+									"    if (jsonData.data.products.length > 0) {",
+									"        pm.globals.set('product_id', jsonData.data.products[0].id);",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/products?page=1&limit=12&search=test&category=1&minPrice=10&maxPrice=500&inStock=true&sortBy=price&sortOrder=asc",
+							"host": ["{{base_url}}"],
+							"path": ["products"],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page number"
+								},
+								{
+									"key": "limit",
+									"value": "12",
+									"description": "Items per page"
+								},
+								{
+									"key": "search",
+									"value": "test",
+									"description": "Search term"
+								},
+								{
+									"key": "category",
+									"value": "1",
+									"description": "Category ID filter"
+								},
+								{
+									"key": "minPrice",
+									"value": "10",
+									"description": "Minimum price filter"
+								},
+								{
+									"key": "maxPrice",
+									"value": "500",
+									"description": "Maximum price filter"
+								},
+								{
+									"key": "inStock",
+									"value": "true",
+									"description": "In stock filter"
+								},
+								{
+									"key": "sortBy",
+									"value": "price",
+									"description": "Sort field"
+								},
+								{
+									"key": "sortOrder",
+									"value": "asc",
+									"description": "Sort direction"
+								}
+							]
+						},
+						"description": "Get all products with comprehensive filtering, search, pagination, and sorting"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Featured Products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/products/featured?limit=8",
+							"host": ["{{base_url}}"],
+							"path": ["products", "featured"],
+							"query": [
+								{
+									"key": "limit",
+									"value": "8",
+									"description": "Number of featured products"
+								}
+							]
+						},
+						"description": "Get featured products for homepage display"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Product Details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/products/{{product_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["products", "{{product_id}}"]
+						},
+						"description": "Get detailed product information including stock variants"
+					},
+					"response": []
+				},
+				{
+					"name": "Check Product Availability",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/products/{{product_id}}/availability",
+							"host": ["{{base_url}}"],
+							"path": ["products", "{{product_id}}", "availability"]
+						},
+						"description": "Check real-time stock availability by size and color"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Related Products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/products/{{product_id}}/related?limit=6",
+							"host": ["{{base_url}}"],
+							"path": ["products", "{{product_id}}", "related"],
+							"query": [
+								{
+									"key": "limit",
+									"value": "6",
+									"description": "Number of related products"
+								}
+							]
+						},
+						"description": "Get products related by category or tags"
+					},
+					"response": []
+				}
+			],
+			"description": "Public product catalog endpoints - no authentication required"
+		},
+		{
+			"name": "🎨 Designer Portal",
+			"item": [
+				{
+					"name": "Get My Designs",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{designer_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/designer/designs",
+							"host": ["{{base_url}}"],
+							"path": ["designer", "designs"]
+						},
+						"description": "Get all designs created by the authenticated designer"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Design Details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{designer_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/designer/designs/{{design_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["designer", "designs", "{{design_id}}"]
+						},
+						"description": "Get specific design details"
+					},
+					"response": []
+				},
+				{
+					"name": "Create New Design",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Design created successfully', function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test('Design ID returned', function () {",
+									"    const jsonData = pm.response.json();",
+									"    if (jsonData.data && jsonData.data.id) {",
+									"        pm.globals.set('design_id', jsonData.data.id);",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{designer_token}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Comprehensive Test Design v2",
+									"type": "text",
+									"description": "Design name"
+								},
+								{
+									"key": "description",
+									"value": "A comprehensive test design created via Postman collection",
+									"type": "text",
+									"description": "Design description"
+								},
+								{
+									"key": "categoryId",
+									"value": "1",
+									"type": "text",
+									"description": "Category ID"
+								},
+								{
+									"key": "designImages",
+									"type": "file",
+									"description": "Upload design images",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/designer/designs",
+							"host": ["{{base_url}}"],
+							"path": ["designer", "designs"]
+						},
+						"description": "Create a new design with optional image uploads"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Design",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{designer_token}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Updated Comprehensive Test Design",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Updated description for the comprehensive test design",
+									"type": "text"
+								},
+								{
+									"key": "categoryId",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "designImages",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/designer/designs/{{design_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["designer", "designs", "{{design_id}}"]
+						},
+						"description": "Update existing design details"
+					},
+					"response": []
+				},
+				{
+					"name": "Submit Design for Approval",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{designer_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/designer/designs/{{design_id}}/submit",
+							"host": ["{{base_url}}"],
+							"path": ["designer", "designs", "{{design_id}}", "submit"]
+						},
+						"description": "Submit design for admin/inventory manager approval"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Design",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{designer_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/designer/designs/{{design_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["designer", "designs", "{{design_id}}"]
+						},
+						"description": "Delete design (only if not submitted for approval)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Available Categories",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{designer_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/designer/categories",
+							"host": ["{{base_url}}"],
+							"path": ["designer", "categories"]
+						},
+						"description": "Get all available categories for design creation"
+					},
+					"response": []
+				}
+			],
+			"description": "Designer portal endpoints for design creation and management"
+		},
+		{
+			"name": "👑 Admin Dashboard",
+			"item": [
+				{
+					"name": "Get Dashboard Statistics",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/admin/dashboard/stats",
+							"host": ["{{base_url}}"],
+							"path": ["admin", "dashboard", "stats"]
+						},
+						"description": "Get comprehensive dashboard statistics including users, orders, revenue, products"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/admin/users",
+							"host": ["{{base_url}}"],
+							"path": ["admin", "users"]
+						},
+						"description": "Get all system users for management"
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Role (Admin)",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"role\": \"inventory_manager\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/admin/users/user_test_designer_456/role",
+							"host": ["{{base_url}}"],
+							"path": ["admin", "users", "user_test_designer_456", "role"]
+						},
+						"description": "Update user role - admin privilege required"
+					},
+					"response": []
+				},
+				{
+					"name": "Generate Monthly Report",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"month\": 12,\n    \"year\": 2024\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/admin/reports/monthly",
+							"host": ["{{base_url}}"],
+							"path": ["admin", "reports", "monthly"]
+						},
+						"description": "Generate monthly business report with PDF export"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Reports",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/admin/reports",
+							"host": ["{{base_url}}"],
+							"path": ["admin", "reports"]
+						},
+						"description": "Get all generated reports"
+					},
+					"response": []
+				},
+				{
+					"name": "Process Bill Image (AI)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "billImage",
+									"type": "file",
+									"description": "Upload bill image for AI processing",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/admin/bills/process",
+							"host": ["{{base_url}}"],
+							"path": ["admin", "bills", "process"]
+						},
+						"description": "Process bill image using Google Cloud Vision API"
+					},
+					"response": []
+				}
+			],
+			"description": "Admin dashboard endpoints for system management and analytics"
+		},
+		{
+			"name": "🛒 Customer Shopping",
+			"item": [
+				{
+					"name": "Get Customer Profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{customer_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/customer/profile",
+							"host": ["{{base_url}}"],
+							"path": ["customer", "profile"]
+						},
+						"description": "Get customer profile information"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Customer Profile",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{customer_token}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "firstName",
+									"value": "Updated Customer",
+									"type": "text"
+								},
+								{
+									"key": "lastName",
+									"value": "Name",
+									"type": "text"
+								},
+								{
+									"key": "phoneNumber",
+									"value": "+1-555-UPDATED",
+									"type": "text"
+								},
+								{
+									"key": "profileImage",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/customer/profile",
+							"host": ["{{base_url}}"],
+							"path": ["customer", "profile"]
+						},
+						"description": "Update customer profile with optional image upload"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Order created successfully', function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test('Order ID returned', function () {",
+									"    const jsonData = pm.response.json();",
+									"    if (jsonData.data && jsonData.data.order) {",
+									"        pm.globals.set('order_id', jsonData.data.order.id);",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{customer_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"items\": [\n        {\n            \"productId\": \"{{product_id}}\",\n            \"stockId\": \"{{stock_id}}\",\n            \"quantity\": 1\n        }\n    ],\n    \"shippingAddress\": {\n        \"name\": \"Test Customer\",\n        \"street\": \"123 Test Street\",\n        \"city\": \"Test City\",\n        \"state\": \"TC\",\n        \"zip\": \"12345\",\n        \"country\": \"USA\"\n    }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/customer/orders",
+							"host": ["{{base_url}}"],
+							"path": ["customer", "orders"]
+						},
+						"description": "Create new order with items and shipping information"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Customer Orders",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{customer_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/customer/orders",
+							"host": ["{{base_url}}"],
+							"path": ["customer", "orders"]
+						},
+						"description": "Get all orders for authenticated customer"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Order Details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{customer_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/customer/orders/{{order_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["customer", "orders", "{{order_id}}"]
+						},
+						"description": "Get specific order details"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Payment Intent",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{customer_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/customer/orders/{{order_id}}/payment-intent",
+							"host": ["{{base_url}}"],
+							"path": ["customer", "orders", "{{order_id}}", "payment-intent"]
+						},
+						"description": "Create Stripe payment intent for order"
+					},
+					"response": []
+				},
+				{
+					"name": "Confirm Payment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{customer_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"paymentIntentId\": \"pi_test_payment_intent_id\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/customer/orders/{{order_id}}/confirm-payment",
+							"host": ["{{base_url}}"],
+							"path": ["customer", "orders", "{{order_id}}", "confirm-payment"]
+						},
+						"description": "Confirm payment completion"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Return Request",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{customer_token}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "orderId",
+									"value": "{{order_id}}",
+									"type": "text"
+								},
+								{
+									"key": "orderItemId",
+									"value": "order_item_id_here",
+									"type": "text"
+								},
+								{
+									"key": "reason",
+									"value": "Product damaged during shipping",
+									"type": "text"
+								},
+								{
+									"key": "returnImages",
+									"type": "file",
+									"description": "Upload return evidence images",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/customer/returns",
+							"host": ["{{base_url}}"],
+							"path": ["customer", "returns"]
+						},
+						"description": "Create return request with optional image uploads"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Return Requests",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{customer_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/customer/returns",
+							"host": ["{{base_url}}"],
+							"path": ["customer", "returns"]
+						},
+						"description": "Get all return requests for customer"
+					},
+					"response": []
+				}
+			],
+			"description": "Customer shopping endpoints including orders, payments, and returns"
+		},
+		{
+			"name": "📦 Order Management",
+			"item": [
+				{
+					"name": "Get All Orders (Admin/Staff)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/orders",
+							"host": ["{{base_url}}"],
+							"path": ["orders"]
+						},
+						"description": "Get all orders in the system (admin/staff access)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Order Analytics",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/orders/analytics?startDate=2024-09-01&endDate=2024-12-31",
+							"host": ["{{base_url}}"],
+							"path": ["orders", "analytics"],
+							"query": [
+								{
+									"key": "startDate",
+									"value": "2024-09-01",
+									"description": "Analytics start date"
+								},
+								{
+									"key": "endDate",
+									"value": "2024-12-31",
+									"description": "Analytics end date"
+								}
+							]
+						},
+						"description": "Get order analytics for specified date range"
+					},
+					"response": []
+				},
+				{
+					"name": "Export Orders Report",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/orders/export?format=pdf&startDate=2024-09-01&endDate=2024-12-31",
+							"host": ["{{base_url}}"],
+							"path": ["orders", "export"],
+							"query": [
+								{
+									"key": "format",
+									"value": "pdf",
+									"description": "Export format: pdf or csv"
+								},
+								{
+									"key": "startDate",
+									"value": "2024-09-01",
+									"description": "Report start date"
+								},
+								{
+									"key": "endDate",
+									"value": "2024-12-31",
+									"description": "Report end date"
+								}
+							]
+						},
+						"description": "Export orders report in PDF or CSV format"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Order Status",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\": \"shipped\",\n    \"notes\": \"Order shipped via FedEx tracking: 12345678901234\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/orders/{{order_id}}/status",
+							"host": ["{{base_url}}"],
+							"path": ["orders", "{{order_id}}", "status"]
+						},
+						"description": "Update order status with optional notes"
+					},
+					"response": []
+				}
+			],
+			"description": "Order management endpoints for admin and staff"
+		},
+		{
+			"name": "💳 Payment Processing",
+			"item": [
+				{
+					"name": "Get All Payments",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/payments",
+							"host": ["{{base_url}}"],
+							"path": ["payments"]
+						},
+						"description": "Get all payments (admin access)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Payments by Date Range",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/payments/range?startDate=2024-09-01&endDate=2024-12-31",
+							"host": ["{{base_url}}"],
+							"path": ["payments", "range"],
+							"query": [
+								{
+									"key": "startDate",
+									"value": "2024-09-01",
+									"description": "Start date for payments"
+								},
+								{
+									"key": "endDate",
+									"value": "2024-12-31",
+									"description": "End date for payments"
+								}
+							]
+						},
+						"description": "Get payments within date range with analytics"
+					},
+					"response": []
+				},
+				{
+					"name": "Process Refund",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"amount\": 50.00,\n    \"reason\": \"Customer requested partial refund\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/payments/payment_id_here/refund",
+							"host": ["{{base_url}}"],
+							"path": ["payments", "payment_id_here", "refund"]
+						},
+						"description": "Process full or partial refund via Stripe"
+					},
+					"response": []
+				}
+			],
+			"description": "Payment processing and refund management"
+		},
+		{
+			"name": "📊 Inventory Management",
+			"item": [
+				{
+					"name": "Get All Products (Inventory View)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{inventory_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/inventory/products",
+							"host": ["{{base_url}}"],
+							"path": ["inventory", "products"]
+						},
+						"description": "Get all products with detailed stock information"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Product from Design",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{inventory_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"designId\": \"{{design_id}}\",\n    \"price\": 299.99,\n    \"stocks\": [\n        {\n            \"quantity\": 50,\n            \"size\": \"S\",\n            \"color\": \"Blue\",\n            \"lowStockThreshold\": 10\n        },\n        {\n            \"quantity\": 75,\n            \"size\": \"M\",\n            \"color\": \"Blue\",\n            \"lowStockThreshold\": 15\n        },\n        {\n            \"quantity\": 60,\n            \"size\": \"L\",\n            \"color\": \"Blue\",\n            \"lowStockThreshold\": 12\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/inventory/products",
+							"host": ["{{base_url}}"],
+							"path": ["inventory", "products"]
+						},
+						"description": "Convert approved design to sellable product with stock variants"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product Details",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{inventory_token}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Updated Product Name",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Updated comprehensive product description",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "349.99",
+									"type": "text"
+								},
+								{
+									"key": "featured",
+									"value": "true",
+									"type": "text"
+								},
+								{
+									"key": "trending",
+									"value": "false",
+									"type": "text"
+								},
+								{
+									"key": "productImages",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/inventory/products/{{product_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["inventory", "products", "{{product_id}}"]
+						},
+						"description": "Update product details and upload new images"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Stock Levels",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{inventory_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"quantity\": 100,\n    \"lowStockThreshold\": 20\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/inventory/stock/{{stock_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["inventory", "stock", "{{stock_id}}"]
+						},
+						"description": "Update stock quantity and threshold levels"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Pending Designs",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{inventory_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/inventory/designs/pending",
+							"host": ["{{base_url}}"],
+							"path": ["inventory", "designs", "pending"]
+						},
+						"description": "Get designs waiting for approval"
+					},
+					"response": []
+				},
+				{
+					"name": "Approve/Reject Design",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{inventory_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\": \"approved\",\n    \"rejectionReason\": \"\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/inventory/designs/{{design_id}}/review",
+							"host": ["{{base_url}}"],
+							"path": ["inventory", "designs", "{{design_id}}", "review"]
+						},
+						"description": "Approve or reject pending design with optional reason"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Low Stock Products",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{inventory_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/inventory/stock/low",
+							"host": ["{{base_url}}"],
+							"path": ["inventory", "stock", "low"]
+						},
+						"description": "Get products with low stock levels"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Category",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{inventory_token}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "New Test Category",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Description for the new test category",
+									"type": "text"
+								},
+								{
+									"key": "parentId",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/inventory/categories",
+							"host": ["{{base_url}}"],
+							"path": ["inventory", "categories"]
+						},
+						"description": "Create new product category"
+					},
+					"response": []
+				}
+			],
+			"description": "Inventory management endpoints for stock control and product management"
+		},
+		{
+			"name": "📂 Categories",
+			"item": [
+				{
+					"name": "Get All Categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/categories",
+							"host": ["{{base_url}}"],
+							"path": ["categories"]
+						},
+						"description": "Get all product categories with hierarchical structure"
+					},
+					"response": []
+				}
+			],
+			"description": "Product category endpoints - public access"
+		},
+		{
+			"name": "🔒 Security & Error Testing",
+			"item": [
+				{
+					"name": "Test Invalid Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Invalid token rejected', function () {",
+									"    pm.response.to.have.status(401);",
+									"});",
+									"",
+									"pm.test('Proper error message', function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.include('Invalid');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer invalid_token_here"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/admin/dashboard/stats",
+							"host": ["{{base_url}}"],
+							"path": ["admin", "dashboard", "stats"]
+						},
+						"description": "Test security with invalid authentication token"
+					},
+					"response": []
+				},
+				{
+					"name": "Test Missing Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Missing token rejected', function () {",
+									"    pm.response.to.have.status(401);",
+									"});",
+									"",
+									"pm.test('Proper error message', function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.include('token');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/admin/dashboard/stats",
+							"host": ["{{base_url}}"],
+							"path": ["admin", "dashboard", "stats"]
+						},
+						"description": "Test security with missing authentication token"
+					},
+					"response": []
+				},
+				{
+					"name": "Test Role-Based Access (Designer -> Admin)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Access denied for wrong role', function () {",
+									"    pm.response.to.have.status(403);",
+									"});",
+									"",
+									"pm.test('Access denied message', function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.include('denied');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{designer_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/admin/dashboard/stats",
+							"host": ["{{base_url}}"],
+							"path": ["admin", "dashboard", "stats"]
+						},
+						"description": "Test role-based access control - designer trying to access admin endpoint"
+					},
+					"response": []
+				},
+				{
+					"name": "Test 404 Error",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('404 Not Found', function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test('Error structure is correct', function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.be.false;",
+									"    pm.expect(jsonData.message).to.include('Not Found');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/nonexistent/endpoint",
+							"host": ["{{base_url}}"],
+							"path": ["nonexistent", "endpoint"]
+						},
+						"description": "Test 404 error handling for non-existent endpoints"
+					},
+					"response": []
+				}
+			],
+			"description": "Security testing endpoints to verify authentication and authorization"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Pre-request script for all requests",
+					"",
+					"// Set common headers",
+					"pm.request.headers.add({",
+					"    key: 'Accept',",
+					"    value: 'application/json'",
+					"});",
+					"",
+					"// Log the request being made",
+					"console.log(`Making ${pm.request.method} request to: ${pm.request.url.toString()}`);",
+					"",
+					"// Set timestamp for any requests that might need it",
+					"pm.globals.set('timestamp', Date.now());"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Global test script for all requests",
+					"",
+					"// Test response time",
+					"pm.test('Response time is acceptable', function () {",
+					"    pm.expect(pm.response.responseTime).to.be.below(5000);",
+					"});",
+					"",
+					"// Test for JSON response where applicable",
+					"if (pm.response.headers.get('Content-Type') && pm.response.headers.get('Content-Type').includes('application/json')) {",
+					"    pm.test('Response is valid JSON', function () {",
+					"        pm.response.to.be.json;",
+					"    });",
+					"    ",
+					"    try {",
+					"        const responseJson = pm.response.json();",
+					"        ",
+					"        // Auto-extract common IDs for use in other requests",
+					"        if (responseJson.data) {",
+					"            // Extract product ID",
+					"            if (responseJson.data.id && pm.request.url.toString().includes('/products')) {",
+					"                pm.globals.set('product_id', responseJson.data.id);",
+					"            }",
+					"            ",
+					"            // Extract order ID",
+					"            if (responseJson.data.order && responseJson.data.order.id) {",
+					"                pm.globals.set('order_id', responseJson.data.order.id);",
+					"            }",
+					"            ",
+					"            // Extract design ID",
+					"            if (responseJson.data.id && pm.request.url.toString().includes('/designs')) {",
+					"                pm.globals.set('design_id', responseJson.data.id);",
+					"            }",
+					"            ",
+					"            // Extract from arrays (e.g., product listings)",
+					"            if (responseJson.data.products && responseJson.data.products.length > 0) {",
+					"                pm.globals.set('product_id', responseJson.data.products[0].id);",
+					"                if (responseJson.data.products[0].stocks && responseJson.data.products[0].stocks.length > 0) {",
+					"                    pm.globals.set('stock_id', responseJson.data.products[0].stocks[0].id);",
+					"                }",
+					"            }",
+					"        }",
+					"    } catch (e) {",
+					"        // JSON parsing failed, but that's okay for some endpoints",
+					"        console.log('Response is not JSON or parsing failed');",
+					"    }",
+					"}",
+					"",
+					"// Log response status",
+					"console.log(`Response status: ${pm.response.status} ${pm.response.code}`);"
+				]
+			}
+		}
+	]
+}
