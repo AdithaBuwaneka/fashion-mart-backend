@@ -91,48 +91,7 @@ app.use(securityLogger);
 
 app.use(morgan('combined', { stream })); // HTTP request logging
 
-// Swagger Documentation Setup
-const { specs, swaggerUi } = require('./swagger');
 
-// Swagger UI
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, {
-  explorer: true,
-  customCss: '.swagger-ui .topbar { display: none }',
-  customSiteTitle: 'Fashion Mart API Documentation'
-}));
-
-// ReDoc Alternative
-app.get('/redoc', (req, res) => {
-  res.send(`
-    <!DOCTYPE html>
-    <html>
-      <head>
-        <title>Fashion Mart API - ReDoc</title>
-        <meta charset="utf-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700|Roboto:300,400,700" rel="stylesheet">
-        <style>
-          body { margin: 0; padding: 0; }
-        </style>
-      </head>
-      <body>
-        <redoc spec-url='/api-docs-json'></redoc>
-        <script src="https://cdn.jsdelivr.net/npm/redoc@2.0.0/bundles/redoc.standalone.js"></script>
-      </body>
-    </html>
-  `);
-});
-
-// JSON API spec endpoint for ReDoc
-app.get('/api-docs-json', (req, res) => {
-  res.setHeader('Content-Type', 'application/json');
-  res.send(specs);
-});
-
-// Documentation redirect
-app.get('/docs', (req, res) => {
-  res.redirect('/api-docs');
-});
 
 // Serve static files
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
