@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Workflow - Fashion Mart</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 8px; margin-bottom: 30px; }
+        .mermaid { text-align: center; margin: 30px 0; background: #f8f9fa; padding: 20px; border-radius: 8px; border: 1px solid #dee2e6; }
+        .section { margin: 30px 0; padding: 20px; background: #f8f9fa; border-radius: 8px; }
+        .endpoint { font-family: monospace; background: #e9ecef; padding: 8px; margin: 5px 0; border-radius: 4px; border-left: 4px solid #007bff; }
+        h1, h2, h3 { color: #2c3e50; }
+        ul { columns: 2; column-gap: 30px; }
+        li { margin-bottom: 8px; break-inside: avoid; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🛍️ Customer Workflow</h1>
+            <p>Complete shopping experience from browsing to order fulfillment</p>
+        </div>
+
+        <div class="mermaid">
+            flowchart TD
+                Start([Customer Visits Site]) --> Auth{Authenticated?}
+                Auth -->|No| Register[Register/Login via Clerk]
+                Auth -->|Yes| Dashboard[Customer Dashboard]
+                Register --> Dashboard
+
+                Dashboard --> Browse[Browse Products]
+                Dashboard --> Profile[Manage Profile]
+                Dashboard --> MyOrders[View My Orders]
+                Dashboard --> Returns[Manage Returns]
+
+                Browse --> Search[Search & Filter Products]
+                Search --> ProductGrid[Product Grid View]
+                ProductGrid --> ProductPage[Product Detail Page]
+                ProductPage --> SelectVariant[Select Size/Color]
+                SelectVariant --> AddToCart[Add to Cart]
+
+                AddToCart --> ContinueShopping{Continue Shopping?}
+                ContinueShopping -->|Yes| Browse
+                ContinueShopping -->|No| Cart[View Cart]
+
+                Cart --> Checkout[Proceed to Checkout]
+                Checkout --> ShippingInfo[Enter Shipping Address]
+                ShippingInfo --> PaymentMethod[Select Payment Method]
+                PaymentMethod --> StripePayment[Stripe Payment Processing]
+                StripePayment --> PaymentSuccess{Payment Success?}
+
+                PaymentSuccess -->|Yes| OrderConfirm[Order Confirmation]
+                PaymentSuccess -->|No| PaymentError[Payment Error - Retry]
+                PaymentError --> PaymentMethod
+
+                OrderConfirm --> OrderPlaced[Order Successfully Placed]
+                OrderPlaced --> EmailConfirm[Email Confirmation Sent]
+                EmailConfirm --> TrackOrder[Track Order Status]
+
+                MyOrders --> OrderHistory[View Order History]
+                OrderHistory --> OrderDetails[View Order Details]
+                OrderDetails --> TrackStatus[Track Delivery Status]
+                OrderDetails --> RequestReturn[Request Return]
+
+                RequestReturn --> ReturnForm[Fill Return Form]
+                ReturnForm --> ReturnReason[Select Return Reason]
+                ReturnReason --> SubmitReturn[Submit Return Request]
+                SubmitReturn --> ReturnPending[Return Under Review]
+
+                Returns --> ReturnStatus[Check Return Status]
+                ReturnStatus --> RefundStatus[Check Refund Status]
+
+                Profile --> UpdatePersonal[Update Personal Info]
+                Profile --> ChangePassword[Change Password]
+                Profile --> AddressBook[Manage Addresses]
+
+                style Start fill:#e1f5fe
+                style Dashboard fill:#f3e5f5
+                style OrderPlaced fill:#e8f5e8
+                style PaymentError fill:#ffebee
+                style RefundStatus fill:#fff3e0
+        </div>
+
+        <div class="section">
+            <h2>Customer Journey Stages</h2>
+            <h3>1. Discovery & Browsing</h3>
+            <ul>
+                <li>Landing page with featured products</li>
+                <li>Product catalog with pagination</li>
+                <li>Advanced filtering (category, price, size, color)</li>
+                <li>Search functionality</li>
+                <li>Product recommendations</li>
+                <li>Wishlist management</li>
+            </ul>
+
+            <h3>2. Product Selection</h3>
+            <ul>
+                <li>Detailed product pages</li>
+                <li>Multiple product images</li>
+                <li>Size and color variant selection</li>
+                <li>Stock availability checking</li>
+                <li>Related products display</li>
+                <li>Customer reviews and ratings</li>
+            </ul>
+
+            <h3>3. Checkout Process</h3>
+            <ul>
+                <li>Shopping cart management</li>
+                <li>Guest checkout option</li>
+                <li>Shipping address management</li>
+                <li>Multiple payment options</li>
+                <li>Stripe secure payments</li>
+                <li>Order summary and confirmation</li>
+            </ul>
+
+            <h3>4. Order Management</h3>
+            <ul>
+                <li>Real-time order tracking</li>
+                <li>Email notifications for status updates</li>
+                <li>Order history access</li>
+                <li>Invoice and receipt download</li>
+                <li>Reorder functionality</li>
+                <li>Cancel order option (if applicable)</li>
+            </ul>
+
+            <h3>5. Returns & Support</h3>
+            <ul>
+                <li>7-day return policy</li>
+                <li>Easy return request process</li>
+                <li>Return tracking system</li>
+                <li>Refund status monitoring</li>
+                <li>Customer support chat</li>
+                <li>FAQ and help center</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Key API Endpoints</h2>
+            <div class="endpoint">GET /api/products - Browse products with filters</div>
+            <div class="endpoint">GET /api/products/featured - Get featured products</div>
+            <div class="endpoint">GET /api/products/{id} - Get product details</div>
+            <div class="endpoint">GET /api/products/{id}/availability - Check stock</div>
+            <div class="endpoint">GET /api/products/{id}/related - Get related products</div>
+            <div class="endpoint">POST /api/customer/orders - Create new order</div>
+            <div class="endpoint">GET /api/customer/orders - Get order history</div>
+            <div class="endpoint">GET /api/customer/orders/{id} - Get order details</div>
+            <div class="endpoint">POST /api/customer/orders/{id}/payment-intent - Create payment</div>
+            <div class="endpoint">POST /api/customer/orders/{id}/confirm-payment - Confirm payment</div>
+            <div class="endpoint">POST /api/customer/returns - Request return</div>
+            <div class="endpoint">GET /api/customer/returns - Get return history</div>
+            <div class="endpoint">GET /api/customer/profile - Get customer profile</div>
+            <div class="endpoint">PUT /api/customer/profile - Update profile</div>
+        </div>
+
+        <div class="section">
+            <h2>Business Rules</h2>
+            <ul>
+                <li><strong>Stock Validation:</strong> Real-time inventory checking before order placement</li>
+                <li><strong>Payment Security:</strong> PCI-compliant payment processing via Stripe</li>
+                <li><strong>Return Policy:</strong> 7-day return window from delivery date</li>
+                <li><strong>Order Tracking:</strong> 6 status levels (Pending → Processing → Shipped → Delivered)</li>
+                <li><strong>Email Notifications:</strong> Automatic updates for order status changes</li>
+                <li><strong>Profile Management:</strong> Secure profile updates with validation</li>
+                <li><strong>Address Validation:</strong> Required shipping address for all orders</li>
+                <li><strong>Multi-variant Support:</strong> Size and color selection with individual stock tracking</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+    </script>
+</body>
+</html>

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Workflow - Fashion Mart</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 8px; margin-bottom: 30px; }
+        .mermaid { text-align: center; margin: 30px 0; background: #f8f9fa; padding: 20px; border-radius: 8px; border: 1px solid #dee2e6; }
+        .section { margin: 30px 0; padding: 20px; background: #f8f9fa; border-radius: 8px; }
+        .endpoint { font-family: monospace; background: #e9ecef; padding: 8px; margin: 5px 0; border-radius: 4px; border-left: 4px solid #17a2b8; }
+        h1, h2, h3 { color: #2c3e50; }
+        ul { columns: 2; column-gap: 30px; }
+        li { margin-bottom: 8px; break-inside: avoid; }
+        .order-status { background: linear-gradient(to right, #ffeaa7, #fab1a0, #74b9ff, #00b894); padding: 15px; border-radius: 8px; color: white; font-weight: bold; text-align: center; margin: 20px 0; }
+        .priority-levels { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin: 20px 0; }
+        .priority { padding: 15px; border-radius: 8px; text-align: center; color: white; font-weight: bold; }
+        .high { background: #e74c3c; }
+        .medium { background: #f39c12; }
+        .low { background: #27ae60; }
+        .routine { background: #3498db; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>👥 Staff Workflow</h1>
+            <p>Order processing, customer support, and operational excellence</p>
+        </div>
+
+        <div class="mermaid">
+            flowchart TD
+                Start([Staff Login]) --> Auth{Staff Authentication}
+                Auth -->|No| AccessDenied[Access Denied]
+                Auth -->|Yes| StaffDashboard[Staff Dashboard]
+
+                StaffDashboard --> OrderProcessing[Order Processing Center]
+                StaffDashboard --> CustomerSupport[Customer Support]
+                StaffDashboard --> ReturnMgmt[Return Management]
+                StaffDashboard --> Reports[Generate Reports]
+
+                OrderProcessing --> NewOrders[New Orders Queue]
+                OrderProcessing --> ProcessingOrders[Orders in Processing]
+                OrderProcessing --> ShippedOrders[Shipped Orders]
+                OrderProcessing --> IssueOrders[Orders with Issues]
+
+                NewOrders --> OrderReview[Review Order Details]
+                OrderReview --> ValidateOrder{Validate Order}
+                ValidateOrder -->|Valid| StartProcessing[Start Processing]
+                ValidateOrder -->|Issues| FlagIssue[Flag Issue]
+
+                FlagIssue --> IssueType{Issue Type}
+                IssueType --> PaymentIssue[Payment Problem]
+                IssueType --> StockIssue[Stock Unavailable]
+                IssueType --> AddressIssue[Address Problem]
+                IssueType --> FraudSuspect[Fraud Suspicion]
+
+                PaymentIssue --> ContactCustomer[Contact Customer]
+                StockIssue --> CheckAlternatives[Check Alternatives]
+                AddressIssue --> ContactCustomer
+                FraudSuspect --> EscalateAdmin[Escalate to Admin]
+
+                StartProcessing --> ProcessingStatus[Update to Processing]
+                ProcessingStatus --> PrepareShipment[Prepare for Shipment]
+                PrepareShipment --> PackingSlip[Generate Packing Slip]
+                PackingSlip --> QualityCheck[Quality Check]
+
+                QualityCheck --> QualityPass{Quality OK?}
+                QualityPass -->|Yes| ReadyShip[Ready for Shipping]
+                QualityPass -->|No| QualityIssue[Handle Quality Issue]
+
+                QualityIssue --> ReplaceItem[Replace Item]
+                QualityIssue --> RefundCustomer[Refund Customer]
+                ReplaceItem --> QualityCheck
+
+                ReadyShip --> UpdateShipped[Update to Shipped]
+                UpdateShipped --> TrackingInfo[Add Tracking Information]
+                TrackingInfo --> NotifyCustomer[Email Customer]
+                NotifyCustomer --> ShippingComplete[Shipping Complete]
+
+                CustomerSupport --> SupportTickets[View Support Tickets]
+                CustomerSupport --> LiveChat[Live Chat Support]
+                CustomerSupport --> EmailSupport[Email Support]
+                CustomerSupport --> PhoneSupport[Phone Support]
+
+                SupportTickets --> TicketQueue[Ticket Priority Queue]
+                TicketQueue --> HighPriority[High Priority]
+                TicketQueue --> MediumPriority[Medium Priority]
+                TicketQueue --> LowPriority[Low Priority]
+
+                HighPriority --> UrgentResponse[Immediate Response]
+                MediumPriority --> StandardResponse[Standard Response]
+                LowPriority --> RoutineResponse[Routine Response]
+
+                UrgentResponse --> ResolveIssue[Resolve Issue]
+                StandardResponse --> ResolveIssue
+                RoutineResponse --> ResolveIssue
+
+                ResolveIssue --> ResolutionType{Resolution Type}
+                ResolutionType --> OrderUpdate[Update Order]
+                ResolutionType --> Refund[Process Refund]
+                ResolutionType --> Replacement[Arrange Replacement]
+                ResolutionType --> Information[Provide Information]
+
+                ReturnMgmt --> ReturnRequests[Return Requests Queue]
+                ReturnRequests --> ReviewReturn[Review Return Request]
+                ReviewReturn --> ReturnDecision{Approve Return?}
+
+                ReturnDecision -->|Approve| ApproveReturn[Approve Return]
+                ReturnDecision -->|Reject| RejectReturn[Reject with Reason]
+                ReturnDecision -->|Need Info| RequestInfo[Request More Info]
+
+                ApproveReturn --> GenerateLabel[Generate Return Label]
+                GenerateLabel --> ProcessRefund[Process Refund]
+                ProcessRefund --> UpdateInventory[Update Inventory]
+
+                Reports --> DailyReports[Daily Performance Reports]
+                Reports --> WeeklyReports[Weekly Summary Reports]
+                Reports --> CustomReports[Custom Reports]
+
+                ContactCustomer --> CustomerResponse{Customer Responds?}
+                CustomerResponse -->|Yes| ResolveIssue
+                CustomerResponse -->|No| FollowUp[Schedule Follow-up]
+
+                style Start fill:#e1f5fe
+                style StaffDashboard fill:#f3e5f5
+                style ShippingComplete fill:#e8f5e8
+                style AccessDenied fill:#ffebee
+                style EscalateAdmin fill:#fff3e0
+                style ProcessRefund fill:#e0f2f1
+        </div>
+
+        <div class="order-status">
+            Order Status Flow: NEW → PROCESSING → SHIPPED → DELIVERED
+        </div>
+
+        <div class="section">
+            <h2>Core Staff Responsibilities</h2>
+            <h3>1. Order Processing Excellence</h3>
+            <ul>
+                <li>Real-time order queue monitoring</li>
+                <li>Order validation and verification</li>
+                <li>Payment status confirmation</li>
+                <li>Inventory availability checking</li>
+                <li>Quality control procedures</li>
+                <li>Shipping coordination</li>
+                <li>Customer communication</li>
+                <li>Status update management</li>
+            </ul>
+
+            <h3>2. Customer Support Operations</h3>
+            <ul>
+                <li>Multi-channel support (email, chat, phone)</li>
+                <li>Ticket prioritization system</li>
+                <li>Issue resolution tracking</li>
+                <li>Customer satisfaction monitoring</li>
+                <li>Knowledge base maintenance</li>
+                <li>Escalation procedures</li>
+                <li>Follow-up protocols</li>
+                <li>Performance metrics tracking</li>
+            </ul>
+
+            <div class="priority-levels">
+                <div class="priority high">HIGH PRIORITY<br/>Payment Issues<br/>Shipping Delays</div>
+                <div class="priority medium">MEDIUM PRIORITY<br/>Product Questions<br/>Account Issues</div>
+                <div class="priority low">LOW PRIORITY<br/>General Inquiries<br/>Feature Requests</div>
+                <div class="priority routine">ROUTINE<br/>Order Status<br/>Tracking Info</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Return Management Process</h2>
+            <h3>Return Request Evaluation</h3>
+            <ul>
+                <li>Return eligibility verification</li>
+                <li>7-day policy compliance checking</li>
+                <li>Product condition assessment</li>
+                <li>Customer history review</li>
+                <li>Refund calculation</li>
+                <li>Return shipping coordination</li>
+                <li>Inventory restock procedures</li>
+                <li>Customer communication</li>
+            </ul>
+
+            <h3>Return Processing Workflow</h3>
+            <ul>
+                <li><strong>Step 1:</strong> Receive return request notification</li>
+                <li><strong>Step 2:</strong> Review order details and purchase date</li>
+                <li><strong>Step 3:</strong> Verify return reason and eligibility</li>
+                <li><strong>Step 4:</strong> Generate return authorization</li>
+                <li><strong>Step 5:</strong> Provide return shipping label</li>
+                <li><strong>Step 6:</strong> Track return shipment</li>
+                <li><strong>Step 7:</strong> Inspect returned item</li>
+                <li><strong>Step 8:</strong> Process refund or exchange</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Quality Control Standards</h2>
+            <h3>Pre-Shipping Inspection</h3>
+            <ul>
+                <li>Product condition verification</li>
+                <li>Size and color accuracy</li>
+                <li>Packaging quality check</li>
+                <li>Order completeness verification</li>
+                <li>Shipping label accuracy</li>
+                <li>Documentation completeness</li>
+                <li>Special handling requirements</li>
+                <li>Final quality approval</li>
+            </ul>
+
+            <h3>Issue Resolution Procedures</h3>
+            <ul>
+                <li><strong>Payment Issues:</strong> Contact customer within 2 hours</li>
+                <li><strong>Stock Problems:</strong> Offer alternatives or partial refund</li>
+                <li><strong>Address Errors:</strong> Verify correct shipping information</li>
+                <li><strong>Quality Defects:</strong> Immediate replacement or refund</li>
+                <li><strong>Shipping Delays:</strong> Proactive customer notification</li>
+                <li><strong>Fraud Concerns:</strong> Escalate to admin immediately</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Key API Endpoints</h2>
+            <div class="endpoint">GET /api/orders - Get orders for staff processing</div>
+            <div class="endpoint">GET /api/orders/{id} - Get detailed order information</div>
+            <div class="endpoint">PUT /api/orders/{id}/status - Update order status</div>
+            <div class="endpoint">POST /api/orders/{id}/tracking - Add tracking information</div>
+            <div class="endpoint">GET /api/orders/analytics - Get order processing analytics</div>
+            <div class="endpoint">GET /api/customer/returns - Get return requests</div>
+            <div class="endpoint">PUT /api/returns/{id}/status - Update return status</div>
+            <div class="endpoint">POST /api/returns/{id}/approve - Approve return request</div>
+            <div class="endpoint">POST /api/payments/{id}/refund - Process customer refund</div>
+            <div class="endpoint">GET /api/staff/tickets - Get support tickets</div>
+            <div class="endpoint">PUT /api/staff/tickets/{id} - Update ticket status</div>
+            <div class="endpoint">GET /api/staff/performance - Get staff performance metrics</div>
+        </div>
+
+        <div class="section">
+            <h2>Performance Metrics & KPIs</h2>
+            <h3>Order Processing Metrics</h3>
+            <ul>
+                <li><strong>Processing Time:</strong> Average time from order to shipment</li>
+                <li><strong>Accuracy Rate:</strong> Percentage of orders processed without errors</li>
+                <li><strong>Daily Throughput:</strong> Number of orders processed per day</li>
+                <li><strong>Quality Score:</strong> Customer satisfaction with order fulfillment</li>
+            </ul>
+
+            <h3>Customer Support Metrics</h3>
+            <ul>
+                <li><strong>Response Time:</strong> Average first response time to inquiries</li>
+                <li><strong>Resolution Rate:</strong> Percentage of issues resolved on first contact</li>
+                <li><strong>Customer Satisfaction:</strong> Support interaction ratings</li>
+                <li><strong>Ticket Volume:</strong> Number of support requests handled</li>
+            </ul>
+
+            <h3>Return Management Metrics</h3>
+            <ul>
+                <li><strong>Return Processing Time:</strong> Time to process return requests</li>
+                <li><strong>Refund Speed:</strong> Time from approval to refund completion</li>
+                <li><strong>Return Rate:</strong> Percentage of orders resulting in returns</li>
+                <li><strong>Customer Retention:</strong> Return customers after return experience</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Daily Operational Workflow</h2>
+            <h3>Morning Routine</h3>
+            <ul>
+                <li><strong>8:00 AM:</strong> Review overnight orders and priority queue</li>
+                <li><strong>8:30 AM:</strong> Check system notifications and alerts</li>
+                <li><strong>9:00 AM:</strong> Begin order processing workflow</li>
+                <li><strong>10:00 AM:</strong> Customer support shift begins</li>
+            </ul>
+
+            <h3>Midday Operations</h3>
+            <ul>
+                <li><strong>12:00 PM:</strong> Lunch rotation with continuous coverage</li>
+                <li><strong>1:00 PM:</strong> Return request processing</li>
+                <li><strong>2:00 PM:</strong> Quality control inspections</li>
+                <li><strong>3:00 PM:</strong> Shipping coordination activities</li>
+            </ul>
+
+            <h3>Afternoon Tasks</h3>
+            <ul>
+                <li><strong>4:00 PM:</strong> Follow-up on pending issues</li>
+                <li><strong>5:00 PM:</strong> Daily performance review</li>
+                <li><strong>5:30 PM:</strong> Handover to next shift</li>
+                <li><strong>6:00 PM:</strong> End of day reporting</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+    </script>
+</body>
+</html>

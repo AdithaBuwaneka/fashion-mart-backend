@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Designer Workflow - Fashion Mart</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 8px; margin-bottom: 30px; }
+        .mermaid { text-align: center; margin: 30px 0; background: #f8f9fa; padding: 20px; border-radius: 8px; border: 1px solid #dee2e6; }
+        .section { margin: 30px 0; padding: 20px; background: #f8f9fa; border-radius: 8px; }
+        .endpoint { font-family: monospace; background: #e9ecef; padding: 8px; margin: 5px 0; border-radius: 4px; border-left: 4px solid #28a745; }
+        h1, h2, h3 { color: #2c3e50; }
+        ul { columns: 2; column-gap: 30px; }
+        li { margin-bottom: 8px; break-inside: avoid; }
+        .status-flow { background: linear-gradient(to right, #ff6b6b, #feca57, #48dbfb, #0be881); padding: 15px; border-radius: 8px; color: white; font-weight: bold; text-align: center; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎨 Designer Workflow</h1>
+            <p>Complete design lifecycle from creation to marketplace publication</p>
+        </div>
+
+        <div class="mermaid">
+            flowchart TD
+                Start([Designer Portal Login]) --> Auth{Authenticated<br/>as Designer?}
+                Auth -->|No| RequestAccess[Request Designer Access]
+                Auth -->|Yes| Studio[Designer Studio Dashboard]
+                RequestAccess --> AdminReview[Admin Reviews Request]
+                AdminReview --> AccessGranted[Access Granted]
+                AccessGranted --> Studio
+
+                Studio --> CreateNew[Create New Design]
+                Studio --> ManageExisting[Manage Existing Designs]
+                Studio --> ViewAnalytics[View Sales Analytics]
+                Studio --> BrowseCategories[Browse Categories]
+
+                CreateNew --> DesignForm[Design Creation Form]
+                DesignForm --> BasicInfo[Enter Basic Information]
+                BasicInfo --> UploadImages[Upload Design Images]
+                UploadImages --> ImageValidation{Images Valid?}
+                ImageValidation -->|No| ImageError[Fix Image Issues]
+                ImageValidation -->|Yes| SetPricing[Set Price & Category]
+                ImageError --> UploadImages
+
+                SetPricing --> SaveDraft[Save as Draft]
+                SaveDraft --> DraftSaved[Draft Saved Successfully]
+
+                DraftSaved --> ReadyToSubmit{Ready to Submit?}
+                ReadyToSubmit -->|No| EditLater[Edit Later]
+                ReadyToSubmit -->|Yes| SubmitForReview[Submit for Review]
+
+                SubmitForReview --> PendingStatus[Status: Pending Review]
+                PendingStatus --> InventoryReview[Inventory Manager Review]
+
+                InventoryReview --> ReviewDecision{Review Decision}
+                ReviewDecision -->|Approved| ApprovedStatus[Status: Approved]
+                ReviewDecision -->|Rejected| RejectedStatus[Status: Rejected]
+                ReviewDecision -->|Needs Changes| ChangesRequested[Changes Requested]
+
+                ApprovedStatus --> AutoProductCreate[Auto-Create Product]
+                AutoProductCreate --> StockVariants[Setup Stock Variants]
+                StockVariants --> ProductLive[Product Goes Live]
+                ProductLive --> SalesTracking[Start Sales Tracking]
+
+                RejectedStatus --> ReviewFeedback[View Feedback]
+                ReviewFeedback --> EditDesign[Edit & Improve]
+                ChangesRequested --> ReviewFeedback
+
+                EditDesign --> SubmitForReview
+
+                ManageExisting --> DesignPortfolio[View Design Portfolio]
+                DesignPortfolio --> DesignDetails[View Design Details]
+                DesignDetails --> EditExisting[Edit Design]
+                DesignDetails --> DeleteDesign[Delete Design]
+                DesignDetails --> ViewPerformance[View Sales Performance]
+
+                ViewAnalytics --> SalesData[Sales Performance Data]
+                ViewAnalytics --> RevenueStats[Revenue Statistics]
+                ViewAnalytics --> TopProducts[Best Performing Products]
+
+                BrowseCategories --> CategoryList[Available Categories]
+                CategoryList --> CategoryInfo[Category Information]
+
+                EditLater --> Studio
+
+                style Start fill:#e1f5fe
+                style Studio fill:#f3e5f5
+                style ApprovedStatus fill:#e8f5e8
+                style RejectedStatus fill:#ffebee
+                style ProductLive fill:#e0f2f1
+                style ChangesRequested fill:#fff3e0
+        </div>
+
+        <div class="status-flow">
+            Design Status Flow: DRAFT → PENDING → APPROVED/REJECTED → LIVE PRODUCT
+        </div>
+
+        <div class="section">
+            <h2>Design Creation Process</h2>
+            <h3>1. Design Conceptualization</h3>
+            <ul>
+                <li>Access to design creation tools</li>
+                <li>Category selection and guidance</li>
+                <li>Market trend insights</li>
+                <li>Competitor analysis tools</li>
+                <li>Design inspiration gallery</li>
+                <li>Template and style guides</li>
+            </ul>
+
+            <h3>2. Design Development</h3>
+            <ul>
+                <li>Multi-image upload support</li>
+                <li>Image format validation (PNG, JPG, WEBP)</li>
+                <li>File size optimization</li>
+                <li>Image quality assessment</li>
+                <li>Design metadata management</li>
+                <li>Version control system</li>
+            </ul>
+
+            <h3>3. Product Specification</h3>
+            <ul>
+                <li>Pricing strategy tools</li>
+                <li>Cost calculation assistance</li>
+                <li>Margin optimization</li>
+                <li>Category assignment</li>
+                <li>Tag and keyword management</li>
+                <li>Description writing tools</li>
+            </ul>
+
+            <h3>4. Review & Approval</h3>
+            <ul>
+                <li>Automated quality checks</li>
+                <li>Inventory manager review</li>
+                <li>Feedback and communication system</li>
+                <li>Revision tracking</li>
+                <li>Approval workflow management</li>
+                <li>Status notification system</li>
+            </ul>
+
+            <h3>5. Market Launch</h3>
+            <ul>
+                <li>Automated product creation</li>
+                <li>Stock variant setup</li>
+                <li>Marketplace publication</li>
+                <li>SEO optimization</li>
+                <li>Marketing material generation</li>
+                <li>Performance monitoring setup</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Design Management Features</h2>
+            <h3>Portfolio Management</h3>
+            <ul>
+                <li>Design portfolio dashboard</li>
+                <li>Status tracking for all designs</li>
+                <li>Performance metrics overview</li>
+                <li>Revenue tracking per design</li>
+                <li>Sales analytics and insights</li>
+                <li>Customer feedback integration</li>
+            </ul>
+
+            <h3>Analytics & Insights</h3>
+            <ul>
+                <li>Real-time sales data</li>
+                <li>Revenue breakdown analysis</li>
+                <li>Customer demographic insights</li>
+                <li>Seasonal trend analysis</li>
+                <li>Competitive performance metrics</li>
+                <li>ROI calculation tools</li>
+            </ul>
+
+            <h3>Collaboration Tools</h3>
+            <ul>
+                <li>Direct communication with inventory team</li>
+                <li>Feedback loop management</li>
+                <li>Version history tracking</li>
+                <li>Collaborative editing features</li>
+                <li>Approval workflow participation</li>
+                <li>Team notification system</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Key API Endpoints</h2>
+            <div class="endpoint">GET /api/designer/designs - Get all designer designs</div>
+            <div class="endpoint">GET /api/designer/designs/{id} - Get specific design details</div>
+            <div class="endpoint">POST /api/designer/designs - Create new design</div>
+            <div class="endpoint">PUT /api/designer/designs/{id} - Update design</div>
+            <div class="endpoint">POST /api/designer/designs/{id}/submit - Submit for review</div>
+            <div class="endpoint">DELETE /api/designer/designs/{id} - Delete design</div>
+            <div class="endpoint">GET /api/designer/categories - Get available categories</div>
+            <div class="endpoint">GET /api/designer/analytics - Get sales analytics</div>
+            <div class="endpoint">GET /api/designer/analytics/revenue - Get revenue data</div>
+            <div class="endpoint">GET /api/designer/analytics/top-products - Get best performers</div>
+        </div>
+
+        <div class="section">
+            <h2>Business Rules & Validation</h2>
+            <ul>
+                <li><strong>Image Requirements:</strong> Max 5MB per image, supported formats: PNG, JPG, WEBP</li>
+                <li><strong>Design Approval:</strong> Must pass inventory manager review before going live</li>
+                <li><strong>Pricing Guidelines:</strong> Minimum price validation, competitive pricing alerts</li>
+                <li><strong>Category Assignment:</strong> Must select from predefined categories</li>
+                <li><strong>Quality Standards:</strong> Automated image quality checks</li>
+                <li><strong>Revision Tracking:</strong> All design changes are tracked and versioned</li>
+                <li><strong>Copyright Compliance:</strong> Original design verification requirements</li>
+                <li><strong>Market Standards:</strong> Adherence to platform design guidelines</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Success Metrics</h2>
+            <ul>
+                <li><strong>Design Approval Rate:</strong> Percentage of designs approved on first submission</li>
+                <li><strong>Time to Market:</strong> Average time from creation to live product</li>
+                <li><strong>Sales Performance:</strong> Revenue generated per design</li>
+                <li><strong>Customer Satisfaction:</strong> Ratings and reviews for designer products</li>
+                <li><strong>Return Rate:</strong> Product return rates by designer</li>
+                <li><strong>Repeat Customers:</strong> Customer retention for designer products</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+    </script>
+</body>
+</html>

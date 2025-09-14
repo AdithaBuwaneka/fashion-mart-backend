@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Workflow - Fashion Mart</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 8px; margin-bottom: 30px; }
+        .mermaid { text-align: center; margin: 30px 0; background: #f8f9fa; padding: 20px; border-radius: 8px; border: 1px solid #dee2e6; }
+        .section { margin: 30px 0; padding: 20px; background: #f8f9fa; border-radius: 8px; }
+        .endpoint { font-family: monospace; background: #e9ecef; padding: 8px; margin: 5px 0; border-radius: 4px; border-left: 4px solid #dc3545; }
+        h1, h2, h3 { color: #2c3e50; }
+        ul { columns: 2; column-gap: 30px; }
+        li { margin-bottom: 8px; break-inside: avoid; }
+        .ai-feature { background: linear-gradient(45deg, #ff6b6b, #feca57); padding: 15px; border-radius: 8px; color: white; font-weight: bold; text-align: center; margin: 20px 0; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0; }
+        .stat-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 8px; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>👑 Admin Workflow</h1>
+            <p>Complete system administration and business intelligence dashboard</p>
+        </div>
+
+        <div class="mermaid">
+            flowchart TD
+                Start([Admin Portal Access]) --> Auth{Super Admin<br/>Authentication?}
+                Auth -->|No| AccessDenied[Access Denied]
+                Auth -->|Yes| Dashboard[Admin Dashboard]
+
+                Dashboard --> UserMgmt[User Management]
+                Dashboard --> SystemAnalytics[System Analytics]
+                Dashboard --> ReportGen[Report Generation]
+                Dashboard --> AIBillProcess[AI Bill Processing]
+                Dashboard --> OrderMgmt[Order Management]
+                Dashboard --> SystemConfig[System Configuration]
+
+                UserMgmt --> ViewAllUsers[View All Users]
+                UserMgmt --> UserRoles[Manage User Roles]
+                UserMgmt --> UserStats[User Statistics]
+                UserMgmt --> UserActivity[User Activity Logs]
+
+                ViewAllUsers --> UserDetails[User Profile Details]
+                UserDetails --> EditUser[Edit User Information]
+                UserDetails --> ChangeRole[Change User Role]
+                UserDetails --> DeactivateUser[Deactivate User]
+                UserDetails --> ViewUserOrders[View User Orders]
+
+                ChangeRole --> RoleSelection{Select New Role}
+                RoleSelection --> CustomerRole[Customer]
+                RoleSelection --> DesignerRole[Designer]
+                RoleSelection --> StaffRole[Staff]
+                RoleSelection --> InventoryRole[Inventory Manager]
+                RoleSelection --> AdminRole[Admin]
+
+                CustomerRole --> RoleUpdated[Role Updated Successfully]
+                DesignerRole --> RoleUpdated
+                StaffRole --> RoleUpdated
+                InventoryRole --> RoleUpdated
+                AdminRole --> RoleUpdated
+
+                SystemAnalytics --> DashboardStats[Dashboard Statistics]
+                SystemAnalytics --> SalesAnalytics[Sales Analytics]
+                SystemAnalytics --> UserAnalytics[User Behavior Analytics]
+                SystemAnalytics --> RevenueAnalytics[Revenue Analytics]
+                SystemAnalytics --> PerformanceMetrics[System Performance]
+
+                DashboardStats --> TotalUsers[Total Users Count]
+                DashboardStats --> TotalOrders[Total Orders Count]
+                DashboardStats --> TotalRevenue[Total Revenue]
+                DashboardStats --> ActiveProducts[Active Products Count]
+
+                ReportGen --> MonthlyReports[Generate Monthly Reports]
+                ReportGen --> CustomReports[Create Custom Reports]
+                ReportGen --> ExportData[Export Data]
+
+                MonthlyReports --> ReportType{Report Type}
+                CustomReports --> DateRange[Select Date Range]
+                DateRange --> ReportType
+
+                ReportType --> SalesReport[Sales Report]
+                ReportType --> UserReport[User Report]
+                ReportType --> InventoryReport[Inventory Report]
+                ReportType --> FinancialReport[Financial Report]
+
+                SalesReport --> GenerateReport[Generate Report]
+                UserReport --> GenerateReport
+                InventoryReport --> GenerateReport
+                FinancialReport --> GenerateReport
+
+                GenerateReport --> ReportFormat{Export Format}
+                ReportFormat --> PDFExport[Export as PDF]
+                ReportFormat --> CSVExport[Export as CSV]
+                ReportFormat --> ExcelExport[Export as Excel]
+
+                AIBillProcess --> UploadBill[Upload Bill Image]
+                UploadBill --> ImageValidation{Valid Image?}
+                ImageValidation -->|No| ImageError[Invalid Image Format]
+                ImageValidation -->|Yes| GoogleVision[Google Vision AI Processing]
+
+                GoogleVision --> ExtractText[Extract Text Data]
+                ExtractText --> ParseBill[Parse Bill Information]
+                ParseBill --> BillData[Extracted Bill Data]
+                BillData --> ReviewData[Review & Validate Data]
+                ReviewData --> SaveBill[Save Bill to System]
+
+                OrderMgmt --> ViewAllOrders[View All Orders]
+                OrderMgmt --> OrderAnalytics[Order Analytics]
+                OrderMgmt --> OrderReports[Order Reports]
+
+                ViewAllOrders --> OrderFilters[Apply Filters]
+                OrderFilters --> OrderList[Filtered Order List]
+                OrderList --> OrderDetail[Order Details]
+                OrderDetail --> UpdateOrderStatus[Update Order Status]
+
+                SystemConfig --> GeneralSettings[General Settings]
+                SystemConfig --> PaymentConfig[Payment Configuration]
+                SystemConfig --> EmailConfig[Email Configuration]
+                SystemConfig --> SecuritySettings[Security Settings]
+
+                style Start fill:#e1f5fe
+                style Dashboard fill:#f3e5f5
+                style RoleUpdated fill:#e8f5e8
+                style AccessDenied fill:#ffebee
+                style GoogleVision fill:#fff3e0
+                style SaveBill fill:#e0f2f1
+        </div>
+
+        <div class="ai-feature">
+            🤖 AI-Powered Bill Processing with Google Vision API
+        </div>
+
+        <div class="section">
+            <h2>Core Administrative Functions</h2>
+            <h3>1. User Management System</h3>
+            <ul>
+                <li>Complete user lifecycle management</li>
+                <li>Role-based access control (5 roles)</li>
+                <li>User activity monitoring</li>
+                <li>Profile verification system</li>
+                <li>Bulk user operations</li>
+                <li>User analytics dashboard</li>
+                <li>Account suspension/activation</li>
+                <li>Permission matrix management</li>
+            </ul>
+
+            <h3>2. Business Intelligence Dashboard</h3>
+            <ul>
+                <li>Real-time system statistics</li>
+                <li>Revenue tracking and forecasting</li>
+                <li>Sales performance metrics</li>
+                <li>User engagement analytics</li>
+                <li>Product performance insights</li>
+                <li>Market trend analysis</li>
+                <li>Conversion rate optimization</li>
+                <li>Customer lifetime value tracking</li>
+            </ul>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div style="font-size: 2em;">👥</div>
+                    <div>User Management</div>
+                    <div>5 Role Types</div>
+                </div>
+                <div class="stat-card">
+                    <div style="font-size: 2em;">📊</div>
+                    <div>Analytics Dashboard</div>
+                    <div>Real-time Data</div>
+                </div>
+                <div class="stat-card">
+                    <div style="font-size: 2em;">📄</div>
+                    <div>Report Generation</div>
+                    <div>Multiple Formats</div>
+                </div>
+                <div class="stat-card">
+                    <div style="font-size: 2em;">🤖</div>
+                    <div>AI Processing</div>
+                    <div>Google Vision API</div>
+                </div>
+            </div>
+
+            <h3>3. Advanced Reporting System</h3>
+            <ul>
+                <li>Automated monthly report generation</li>
+                <li>Custom date range reports</li>
+                <li>Multi-format exports (PDF, CSV, Excel)</li>
+                <li>Scheduled report delivery</li>
+                <li>Interactive data visualization</li>
+                <li>Drill-down capability</li>
+                <li>Comparative analysis tools</li>
+                <li>Executive summary generation</li>
+            </ul>
+
+            <h3>4. AI-Powered Bill Processing</h3>
+            <ul>
+                <li>Google Cloud Vision API integration</li>
+                <li>Automated text extraction</li>
+                <li>Intelligent data parsing</li>
+                <li>Bill validation and verification</li>
+                <li>Error detection and correction</li>
+                <li>Batch processing capability</li>
+                <li>Historical data comparison</li>
+                <li>Compliance checking</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>System Monitoring & Control</h2>
+            <h3>Order Management Oversight</h3>
+            <ul>
+                <li>Global order tracking system</li>
+                <li>Order status management</li>
+                <li>Payment verification tools</li>
+                <li>Fraud detection alerts</li>
+                <li>Shipping coordination</li>
+                <li>Customer communication logs</li>
+                <li>Return processing oversight</li>
+                <li>Refund authorization system</li>
+            </ul>
+
+            <h3>Security & Compliance</h3>
+            <ul>
+                <li>Security audit trails</li>
+                <li>Access log monitoring</li>
+                <li>Data protection compliance</li>
+                <li>GDPR compliance tools</li>
+                <li>Payment security oversight</li>
+                <li>System vulnerability scanning</li>
+                <li>Backup and recovery management</li>
+                <li>Incident response protocols</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Key API Endpoints</h2>
+            <div class="endpoint">GET /api/admin/dashboard/stats - Get comprehensive dashboard statistics</div>
+            <div class="endpoint">GET /api/admin/users - Get all users with filtering</div>
+            <div class="endpoint">GET /api/admin/users/{id} - Get specific user details</div>
+            <div class="endpoint">PUT /api/admin/users/{id}/role - Update user role</div>
+            <div class="endpoint">PUT /api/admin/users/{id}/status - Activate/deactivate user</div>
+            <div class="endpoint">GET /api/admin/reports/monthly - Get monthly business reports</div>
+            <div class="endpoint">POST /api/admin/reports - Generate custom reports</div>
+            <div class="endpoint">GET /api/admin/reports/{id}/download - Download report files</div>
+            <div class="endpoint">POST /api/admin/bills/process - Process bills with AI</div>
+            <div class="endpoint">GET /api/admin/bills/processed - Get processed bill history</div>
+            <div class="endpoint">GET /api/admin/analytics/sales - Get detailed sales analytics</div>
+            <div class="endpoint">GET /api/admin/analytics/users - Get user behavior analytics</div>
+            <div class="endpoint">GET /api/admin/system/health - Get system health status</div>
+            <div class="endpoint">POST /api/admin/system/backup - Initiate system backup</div>
+        </div>
+
+        <div class="section">
+            <h2>Administrative Workflows</h2>
+            <h3>Daily Operations</h3>
+            <ul>
+                <li><strong>Morning Dashboard Review:</strong> Check overnight activities and system status</li>
+                <li><strong>User Account Management:</strong> Process new registrations and role requests</li>
+                <li><strong>Order Oversight:</strong> Review flagged orders and payment issues</li>
+                <li><strong>Performance Monitoring:</strong> Check system performance metrics</li>
+            </ul>
+
+            <h3>Weekly Reports</h3>
+            <ul>
+                <li><strong>Sales Performance:</strong> Weekly sales analysis and trends</li>
+                <li><strong>User Activity:</strong> User engagement and growth metrics</li>
+                <li><strong>System Health:</strong> Technical performance and security status</li>
+                <li><strong>Financial Summary:</strong> Revenue, costs, and profitability analysis</li>
+            </ul>
+
+            <h3>Monthly Analytics</h3>
+            <ul>
+                <li><strong>Business Intelligence:</strong> Comprehensive business performance review</li>
+                <li><strong>Market Analysis:</strong> Competitive positioning and market trends</li>
+                <li><strong>Strategic Planning:</strong> Growth opportunities and strategic initiatives</li>
+                <li><strong>Compliance Review:</strong> Regulatory compliance and risk assessment</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Success Metrics & KPIs</h2>
+            <ul>
+                <li><strong>System Uptime:</strong> 99.9% target availability</li>
+                <li><strong>User Satisfaction:</strong> Customer support resolution time</li>
+                <li><strong>Revenue Growth:</strong> Month-over-month revenue increase</li>
+                <li><strong>Order Processing:</strong> Average order fulfillment time</li>
+                <li><strong>Security Incidents:</strong> Zero tolerance for data breaches</li>
+                <li><strong>AI Processing Accuracy:</strong> Bill processing accuracy rate</li>
+                <li><strong>Report Generation:</strong> Automated report delivery success rate</li>
+                <li><strong>User Retention:</strong> Monthly active user retention rate</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+    </script>
+</body>
+</html>

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Manager Workflow - Fashion Mart</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 8px; margin-bottom: 30px; }
+        .mermaid { text-align: center; margin: 30px 0; background: #f8f9fa; padding: 20px; border-radius: 8px; border: 1px solid #dee2e6; }
+        .section { margin: 30px 0; padding: 20px; background: #f8f9fa; border-radius: 8px; }
+        .endpoint { font-family: monospace; background: #e9ecef; padding: 8px; margin: 5px 0; border-radius: 4px; border-left: 4px solid #6f42c1; }
+        h1, h2, h3 { color: #2c3e50; }
+        ul { columns: 2; column-gap: 30px; }
+        li { margin-bottom: 8px; break-inside: avoid; }
+        .approval-flow { background: linear-gradient(to right, #74b9ff, #0984e3, #00b894, #e17055); padding: 15px; border-radius: 8px; color: white; font-weight: bold; text-align: center; margin: 20px 0; }
+        .alert-levels { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0; }
+        .alert { padding: 15px; border-radius: 8px; text-align: center; color: white; font-weight: bold; }
+        .critical { background: #e74c3c; }
+        .warning { background: #f39c12; }
+        .info { background: #3498db; }
+        .success { background: #27ae60; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📦 Inventory Manager Workflow</h1>
+            <p>Complete inventory management, design approval, and stock optimization</p>
+        </div>
+
+        <div class="mermaid">
+            flowchart TD
+                Start([Inventory Manager Access]) --> Auth{Authorized Access?}
+                Auth -->|No| AccessDenied[Access Denied]
+                Auth -->|Yes| InventoryHub[Inventory Management Hub]
+
+                InventoryHub --> ProductMgmt[Product Management]
+                InventoryHub --> StockControl[Stock Control Center]
+                InventoryHub --> DesignApproval[Design Approval Workflow]
+                InventoryHub --> AlertCenter[Stock Alert Center]
+                InventoryHub --> CategoryMgmt[Category Management]
+                InventoryHub --> Analytics[Inventory Analytics]
+
+                ProductMgmt --> ViewProducts[View All Products]
+                ProductMgmt --> CreateProduct[Create New Product]
+                ProductMgmt --> UpdateProduct[Update Product Details]
+                ProductMgmt --> ManageVariants[Manage Variants]
+
+                ViewProducts --> ProductFilter[Filter & Search Products]
+                ProductFilter --> ProductDetails[Product Detail View]
+                ProductDetails --> EditProduct[Edit Product Info]
+                ProductDetails --> StockLevels[View Stock Levels]
+                ProductDetails --> ProductAnalytics[Product Performance]
+
+                CreateProduct --> ProductForm[Product Creation Form]
+                ProductForm --> BasicProductInfo[Enter Basic Information]
+                BasicProductInfo --> SetCategory[Assign Category]
+                SetCategory --> VariantSetup[Setup Size/Color Variants]
+                VariantSetup --> InitialStock[Set Initial Stock Levels]
+                InitialStock --> ProductCreated[Product Created Successfully]
+
+                StockControl --> CurrentStock[Current Stock Overview]
+                StockControl --> StockAdjustments[Stock Adjustments]
+                StockControl --> RestockOperations[Restock Operations]
+                StockControl --> StockReports[Stock Reports]
+
+                CurrentStock --> StockByProduct[Stock by Product]
+                CurrentStock --> StockByCategory[Stock by Category]
+                CurrentStock --> StockByVariant[Stock by Variant]
+
+                StockByProduct --> StockDetails[Detailed Stock View]
+                StockDetails --> AdjustQuantity[Adjust Quantity]
+                StockDetails --> SetThreshold[Set Low Stock Threshold]
+                StockDetails --> StockHistory[View Stock History]
+
+                AdjustQuantity --> AdjustmentReason{Adjustment Reason}
+                AdjustmentReason --> Sale[Sale/Damage]
+                AdjustmentReason --> Restock[Restock]
+                AdjustmentReason --> Correction[Inventory Correction]
+                AdjustmentReason --> Return[Customer Return]
+
+                Sale --> UpdateQuantity[Update Quantity]
+                Restock --> UpdateQuantity
+                Correction --> UpdateQuantity
+                Return --> UpdateQuantity
+                UpdateQuantity --> StockUpdated[Stock Updated]
+
+                RestockOperations --> LowStockItems[Identify Low Stock Items]
+                RestockOperations --> PurchaseOrder[Create Purchase Order]
+                RestockOperations --> ReceiveStock[Receive New Stock]
+                RestockOperations --> QualityInspection[Quality Inspection]
+
+                LowStockItems --> RestockPriority{Priority Level}
+                RestockPriority --> Critical[Critical - Out of Stock]
+                RestockPriority --> High[High - Very Low Stock]
+                RestockPriority --> Medium[Medium - Below Threshold]
+
+                Critical --> UrgentOrder[Urgent Purchase Order]
+                High --> StandardOrder[Standard Purchase Order]
+                Medium --> RoutineOrder[Routine Purchase Order]
+
+                UrgentOrder --> ApprovalRequired{Approval Required?}
+                StandardOrder --> ApprovalRequired
+                RoutineOrder --> ApprovalRequired
+
+                ApprovalRequired -->|Yes| ManagerApproval[Manager Approval]
+                ApprovalRequired -->|No| ProcessOrder[Process Order]
+                ManagerApproval --> ProcessOrder
+
+                DesignApproval --> PendingDesigns[View Pending Designs]
+                DesignApproval --> ReviewQueue[Design Review Queue]
+                DesignApproval --> ApprovalHistory[Approval History]
+
+                PendingDesigns --> DesignDetails[Design Details]
+                DesignDetails --> ReviewDesign[Review Design Quality]
+                ReviewDesign --> DesignDecision{Approval Decision}
+
+                DesignDecision -->|Approve| ApproveDesign[Approve Design]
+                DesignDecision -->|Reject| RejectDesign[Reject with Feedback]
+                DesignDecision -->|Request Changes| RequestChanges[Request Modifications]
+
+                ApproveDesign --> CreateProductFromDesign[Create Product from Design]
+                CreateProductFromDesign --> SetupStockVariants[Setup Stock Variants]
+                SetupStockVariants --> ProductGoesLive[Product Goes Live]
+
+                RejectDesign --> FeedbackForm[Provide Detailed Feedback]
+                FeedbackForm --> NotifyDesigner[Notify Designer]
+
+                RequestChanges --> ChangeRequests[Specify Required Changes]
+                ChangeRequests --> NotifyDesigner
+
+                AlertCenter --> StockAlerts[Stock Level Alerts]
+                AlertCenter --> ExpiryAlerts[Product Expiry Alerts]
+                AlertCenter --> TrendAlerts[Demand Trend Alerts]
+                AlertCenter --> SystemAlerts[System Notifications]
+
+                StockAlerts --> CriticalAlerts[Critical Stock Alerts]
+                StockAlerts --> WarningAlerts[Warning Level Alerts]
+                StockAlerts --> InfoAlerts[Information Alerts]
+
+                CriticalAlerts --> ImmediateAction[Immediate Action Required]
+                WarningAlerts --> PlanAction[Plan Restocking Action]
+                InfoAlerts --> MonitorTrends[Monitor Trends]
+
+                CategoryMgmt --> ViewCategories[View All Categories]
+                CategoryMgmt --> CreateCategory[Create New Category]
+                CategoryMgmt --> UpdateCategory[Update Category]
+                CategoryMgmt --> CategoryAnalytics[Category Performance]
+
+                Analytics --> InventoryTurnover[Inventory Turnover Analysis]
+                Analytics --> DemandForecasting[Demand Forecasting]
+                Analytics --> SeasonalTrends[Seasonal Trend Analysis]
+                Analytics --> ProfitabilityAnalysis[Profitability Analysis]
+
+                style Start fill:#e1f5fe
+                style InventoryHub fill:#f3e5f5
+                style ProductGoesLive fill:#e8f5e8
+                style AccessDenied fill:#ffebee
+                style ApproveDesign fill:#e0f2f1
+                style RejectDesign fill:#ffebee
+                style ImmediateAction fill:#fff3e0
+        </div>
+
+        <div class="approval-flow">
+            Design Approval Flow: PENDING → REVIEW → APPROVED/REJECTED → PRODUCT CREATION
+        </div>
+
+        <div class="section">
+            <h2>Core Inventory Management Functions</h2>
+            <h3>1. Product Lifecycle Management</h3>
+            <ul>
+                <li>Complete product creation and management</li>
+                <li>Multi-variant product support (size, color)</li>
+                <li>Product categorization and organization</li>
+                <li>Price management and optimization</li>
+                <li>Product performance tracking</li>
+                <li>Quality control standards</li>
+                <li>Product discontinuation procedures</li>
+                <li>Inventory valuation methods</li>
+            </ul>
+
+            <h3>2. Stock Control & Optimization</h3>
+            <ul>
+                <li>Real-time stock level monitoring</li>
+                <li>Automated low stock alerts</li>
+                <li>Multi-location inventory tracking</li>
+                <li>Stock adjustment workflows</li>
+                <li>Inventory reconciliation processes</li>
+                <li>Demand forecasting algorithms</li>
+                <li>Seasonal trend analysis</li>
+                <li>Dead stock identification</li>
+            </ul>
+
+            <div class="alert-levels">
+                <div class="alert critical">CRITICAL ALERT<br/>Out of Stock<br/>Immediate Action</div>
+                <div class="alert warning">WARNING<br/>Low Stock<br/>Reorder Soon</div>
+                <div class="alert info">INFORMATION<br/>Stock Update<br/>Monitor Closely</div>
+                <div class="alert success">HEALTHY<br/>Good Stock<br/>No Action Needed</div>
+            </div>
+
+            <h3>3. Design Approval Workflow</h3>
+            <ul>
+                <li>Designer submission review</li>
+                <li>Quality assessment procedures</li>
+                <li>Market viability analysis</li>
+                <li>Brand consistency checking</li>
+                <li>Competitive analysis integration</li>
+                <li>Feedback and communication system</li>
+                <li>Approval tracking and metrics</li>
+                <li>Designer performance monitoring</li>
+            </ul>
+
+            <h3>4. Purchase Order Management</h3>
+            <ul>
+                <li>Automated reorder point calculations</li>
+                <li>Supplier management integration</li>
+                <li>Purchase order generation</li>
+                <li>Order tracking and fulfillment</li>
+                <li>Receiving and quality inspection</li>
+                <li>Invoice matching and approval</li>
+                <li>Vendor performance evaluation</li>
+                <li>Cost analysis and optimization</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Advanced Analytics & Reporting</h2>
+            <h3>Inventory Performance Metrics</h3>
+            <ul>
+                <li>Inventory turnover ratios</li>
+                <li>Days sales outstanding (DSO)</li>
+                <li>Stock-out frequency analysis</li>
+                <li>Carrying cost calculations</li>
+                <li>Gross margin analysis by product</li>
+                <li>Seasonal demand patterns</li>
+                <li>ABC analysis classification</li>
+                <li>Slow-moving inventory reports</li>
+            </ul>
+
+            <h3>Predictive Analytics</h3>
+            <ul>
+                <li>Machine learning demand forecasting</li>
+                <li>Seasonal trend predictions</li>
+                <li>Reorder point optimization</li>
+                <li>Price elasticity analysis</li>
+                <li>Customer behavior impact on inventory</li>
+                <li>Market trend integration</li>
+                <li>Supply chain risk assessment</li>
+                <li>Profitability forecasting</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Stock Management Workflows</h2>
+            <h3>Daily Stock Operations</h3>
+            <ul>
+                <li><strong>Morning Review:</strong> Check overnight stock movements and alerts</li>
+                <li><strong>Alert Processing:</strong> Address critical and warning level alerts</li>
+                <li><strong>Order Processing:</strong> Review and approve purchase orders</li>
+                <li><strong>Quality Control:</strong> Inspect incoming stock deliveries</li>
+                <li><strong>Design Review:</strong> Evaluate pending designer submissions</li>
+                <li><strong>Data Analysis:</strong> Review performance metrics and trends</li>
+                <li><strong>Reporting:</strong> Generate daily operational reports</li>
+                <li><strong>Planning:</strong> Strategic planning for next day operations</li>
+            </ul>
+
+            <h3>Weekly Stock Assessment</h3>
+            <ul>
+                <li><strong>Inventory Reconciliation:</strong> Physical vs. system count verification</li>
+                <li><strong>Performance Analysis:</strong> Review weekly KPIs and metrics</li>
+                <li><strong>Supplier Evaluation:</strong> Assess vendor performance</li>
+                <li><strong>Trend Analysis:</strong> Identify emerging patterns</li>
+                <li><strong>Category Review:</strong> Analyze category performance</li>
+                <li><strong>Forecast Updates:</strong> Adjust demand predictions</li>
+                <li><strong>Strategic Planning:</strong> Plan for upcoming weeks</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Key API Endpoints</h2>
+            <div class="endpoint">GET /api/inventory/products - Get all products with stock info</div>
+            <div class="endpoint">POST /api/inventory/products - Create new product</div>
+            <div class="endpoint">PUT /api/inventory/products/{id} - Update product details</div>
+            <div class="endpoint">DELETE /api/inventory/products/{id} - Remove product</div>
+            <div class="endpoint">GET /api/inventory/stock/{id} - Get stock details</div>
+            <div class="endpoint">PUT /api/inventory/stock/{id} - Update stock levels</div>
+            <div class="endpoint">GET /api/inventory/stock/low - Get low stock alerts</div>
+            <div class="endpoint">POST /api/inventory/stock/adjust - Adjust stock quantities</div>
+            <div class="endpoint">GET /api/inventory/designs/pending - Get pending designs</div>
+            <div class="endpoint">PUT /api/inventory/designs/{id}/review - Review design</div>
+            <div class="endpoint">POST /api/inventory/designs/{id}/approve - Approve design</div>
+            <div class="endpoint">POST /api/inventory/designs/{id}/reject - Reject design</div>
+            <div class="endpoint">GET /api/inventory/categories - Get all categories</div>
+            <div class="endpoint">POST /api/inventory/categories - Create category</div>
+            <div class="endpoint">GET /api/inventory/analytics - Get inventory analytics</div>
+            <div class="endpoint">GET /api/inventory/reports - Generate inventory reports</div>
+        </div>
+
+        <div class="section">
+            <h2>Design Approval Criteria</h2>
+            <h3>Quality Assessment Standards</h3>
+            <ul>
+                <li><strong>Technical Quality:</strong> Image resolution, format compliance, color accuracy</li>
+                <li><strong>Design Originality:</strong> Uniqueness and creative value assessment</li>
+                <li><strong>Market Viability:</strong> Commercial potential and target market fit</li>
+                <li><strong>Brand Alignment:</strong> Consistency with platform brand guidelines</li>
+                <li><strong>Production Feasibility:</strong> Manufacturing complexity and cost analysis</li>
+                <li><strong>Legal Compliance:</strong> Copyright, trademark, and legal clearance</li>
+                <li><strong>Safety Standards:</strong> Product safety and regulatory compliance</li>
+                <li><strong>Customer Appeal:</strong> Market research and customer preference alignment</li>
+            </ul>
+
+            <h3>Approval Decision Matrix</h3>
+            <ul>
+                <li><strong>Immediate Approval:</strong> Exceeds quality standards, high market potential</li>
+                <li><strong>Conditional Approval:</strong> Good quality with minor modifications needed</li>
+                <li><strong>Revision Required:</strong> Potential but needs significant improvements</li>
+                <li><strong>Rejection:</strong> Does not meet minimum quality or legal standards</li>
+                <li><strong>Hold for Review:</strong> Requires additional assessment or market research</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Performance Metrics & KPIs</h2>
+            <h3>Inventory Management KPIs</h3>
+            <ul>
+                <li><strong>Inventory Turnover:</strong> 6-8x annually target</li>
+                <li><strong>Stock-out Rate:</strong> <2% target for popular items</li>
+                <li><strong>Carrying Cost:</strong> <25% of inventory value</li>
+                <li><strong>Order Fill Rate:</strong> >98% customer order fulfillment</li>
+                <li><strong>Inventory Accuracy:</strong> >99.5% system vs. physical count</li>
+                <li><strong>Gross Margin:</strong> Product profitability tracking</li>
+                <li><strong>Days in Inventory:</strong> Average days stock on hand</li>
+                <li><strong>Forecast Accuracy:</strong> Demand prediction precision</li>
+            </ul>
+
+            <h3>Design Approval Metrics</h3>
+            <ul>
+                <li><strong>Approval Rate:</strong> Percentage of designs approved</li>
+                <li><strong>Review Time:</strong> Average time to review submissions</li>
+                <li><strong>Designer Satisfaction:</strong> Feedback quality ratings</li>
+                <li><strong>Market Success:</strong> Approved design sales performance</li>
+                <li><strong>Quality Improvement:</strong> Designer submission quality trends</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Emergency Procedures</h2>
+            <h3>Critical Stock Situations</h3>
+            <ul>
+                <li><strong>Stock-out Crisis:</strong> Emergency supplier contact and expedited ordering</li>
+                <li><strong>Quality Issues:</strong> Immediate product recall and supplier notification</li>
+                <li><strong>System Failures:</strong> Manual tracking and backup procedures</li>
+                <li><strong>Demand Spikes:</strong> Rapid restock and capacity expansion</li>
+                <li><strong>Supplier Issues:</strong> Alternative supplier activation</li>
+            </ul>
+
+            <h3>Communication Protocols</h3>
+            <ul>
+                <li><strong>Internal Teams:</strong> Immediate notification of critical issues</li>
+                <li><strong>Management:</strong> Escalation procedures for major problems</li>
+                <li><strong>Suppliers:</strong> Direct communication channels for urgent needs</li>
+                <li><strong>Customers:</strong> Transparent communication about stock availability</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+    </script>
+</body>
+</html>
