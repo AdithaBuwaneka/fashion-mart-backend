@@ -42,6 +42,8 @@
     "sequelize": "^6.31.1",
     "stripe": "^12.5.0",
     "svix": "^1.68.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
     "winston": "^3.8.2",
     "winston-daily-rotate-file": "^4.7.1",
     "xss": "^1.0.15"
