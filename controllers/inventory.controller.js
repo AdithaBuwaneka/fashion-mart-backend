@@ -439,19 +439,23 @@ exports.reviewDesign = async (req, res) => {
     await design.save();
     
     // Create notification for designer
-    await Notification.create({
-      userId: design.designerId,
-      type: 'design_review',
-      title: `Design ${status === 'approved' ? 'Approved' : 'Rejected'}`,
-      message: status === 'approved' 
-        ? `Your design "${design.name}" has been approved.` 
-        : `Your design "${design.name}" has been rejected. Reason: ${rejectionReason}`,
-      data: {
-        designId: design.id,
-        status: design.status,
-        reason: design.rejectionReason
-      }
-    });
+    try {
+      await Notification.create({
+        userId: design.designerId,
+        type: 'system',
+        title: `Design ${status === 'approved' ? 'Approved' : 'Rejected'}`,
+        message: status === 'approved'
+          ? `Your design "${design.name}" has been approved.`
+          : `Your design "${design.name}" has been rejected. Reason: ${rejectionReason}`,
+        data: {
+          designId: design.id,
+          status: design.status,
+          reason: design.rejectionReason
+        }
+      });
+    } catch (notificationError) {
+      console.warn('Notification creation failed (non-blocking):', notificationError.message);
+    }
     
     res.status(200).json({
       success: true,

@@ -526,7 +526,7 @@ exports.processReturn = async (req, res) => {
     // Create notification for customer
     await Notification.create({
       userId: returnRequest.customerId,
-      type: 'return_status',
+      type: 'return',
       title: 'Return Status Updated',
       message: status === 'approved' 
         ? `Your return request for order #${returnRequest.order.id.substring(0, 8)} has been approved. Refund amount: $${returnRequest.refundAmount}.` 

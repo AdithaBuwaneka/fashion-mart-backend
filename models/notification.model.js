@@ -10,7 +10,7 @@ module.exports = (sequelize, Sequelize) => {
       allowNull: false
     },
     type: {
-      type: Sequelize.ENUM('low_stock', 'new_order', 'order_status', 'payment', 'return', 'system'),
+      type: Sequelize.ENUM('low_stock', 'new_order', 'order_status', 'payment', 'return', 'system', 'design_review', 'return_status'),
       allowNull: false
     },
     title: {
