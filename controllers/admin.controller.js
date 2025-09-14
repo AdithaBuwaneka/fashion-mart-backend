@@ -230,7 +230,7 @@ exports.generateMonthlyReport = async (req, res) => {
       await newReport.save();
     }
     
-    res.status(200).json({
+    res.status(201).json({
       success: true,
       message: 'Report generated successfully',
       data: {
