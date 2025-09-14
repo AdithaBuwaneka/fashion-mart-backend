@@ -1,0 +1,21 @@
+{
+  "timestamp": "2025-09-14T09:00:28.814Z",
+  "results": {
+    "passed": 49,
+    "failed": 3,
+    "total": 52,
+    "issues": [
+      "Customer Confirm Payment: 500 - Failed to confirm payment",
+      "Staff Assign Order: 400 - Order cannot be assigned in its current state",
+      "Staff Update Order Status: 403 - Unauthorized - this order is not assigned to you"
+    ]
+  },
+  "testData": {
+    "orderId": "2f4189d5-0e4f-47c9-83e8-019080e492db",
+    "designId": "10e4dd7f-4b7a-4b8b-a939-36dc01a6d523",
+    "productId": "98c886de-fcbe-47e9-b4ff-284e635d43d3",
+    "categoryId": 5,
+    "stockId": "02bf4667-426d-44eb-aaf9-67627bd4c004",
+    "returnId": null
+  }
+}

@@ -40,7 +40,7 @@ exports.createDesign = async (req, res) => {
       categoryId,
       designerId: req.userId,
       images,
-      status: 'pending'
+      status: 'draft'
     });
     
     res.status(201).json({
