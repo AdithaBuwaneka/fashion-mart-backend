@@ -157,7 +157,7 @@ router.get('/:productId', async (req, res) => {
   }
 });
 
-// Get featured products (public endpoint)
+// Get featured products (public endpoint) - MUST be before /:productId
 router.get('/featured', async (req, res) => {
   try {
     const { limit = 12 } = req.query;
